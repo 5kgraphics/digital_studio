@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5K Digital Studio - Download Digital Assets & Courses</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .asset-card,
+        body.dark-mode .page-content,
+        body.dark-mode .search-bar {
+            background-color: #1e1e1e;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .asset-description,
+        body.dark-mode .asset-meta,
+        body.dark-mode .page-content p,
+        body.dark-mode .faq-answer,
+        body.dark-mode .blog-excerpt {
+            color: #ccc;
+        }
+
+        body.dark-mode .search-bar input {
+            background-color: #1e1e1e;
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .page-title,
+        body.dark-mode .asset-title,
+        body.dark-mode .faq-question,
+        body.dark-mode .blog-title {
+            color: #214D56; /* Changed from purple */
+        }
+
+        body.dark-mode .mobile-menu-items {
+            background-color: #1e1e1e;
+        }
+
+        body.dark-mode .menu-items a {
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .menu-items a:hover {
+            background-color: #333;
+        }
+        
+        /* Popup Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        body.dark-mode .modal-content {
+            background: #1e1e1e;
+            color: #f5f5f5;
+        }
+
+        .modal-header {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        body.dark-mode .modal-header {
+            border-bottom: 1px solid #333;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #214D56; /* Changed from purple */
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        body.dark-mode .modal-close {
+            color: #ccc;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+
+        .modal-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .modal-footer {
+            padding: 1rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        body.dark-mode .modal-footer {
+            border-top: 1px solid #333;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #214D56 0%, #214D56 100%); /* Changed from purple */
+            color: white;
+            padding: 0.7rem 2rem; /* Reduced thickness */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky; /* Make header sticky */
+            top: 0; /* Stick to the top */
+            z-index: 100; /* Ensure it stays above other content */
+            display: flex; /* Use flexbox for layout */
+            justify-content: space-between; /* Space out logo and menu */
+            align-items: center; /* Vertically align items */
+        }
+        
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align logo and tagline to the left */
+        }
+
+        .logo {
+            font-size: 1.5rem; /* Reduced font size to small */
+            font-weight: 700;
+            margin-bottom: 0.2rem; /* Reduced margin */
+            cursor: pointer;
+        }
+        
+        /* Removed .tagline from header */
+        
+        /* Menu Styles */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Space between dark mode toggle and menu */
+        }
+
+        .dark-mode-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: block; /* Show on mobile */
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        .desktop-menu {
+            display: none; /* Hidden on mobile */
+        }
+
+        @media (min-width: 769px) {
+            .menu-btn {
+                display: none; /* Hide on desktop */
+            }
+            .desktop-menu {
+                display: flex; /* Show on desktop */
+                gap: 15px;
+            }
+        }
+
+        .mobile-menu-items {
+            display: none;
+            position: absolute;
+            top: 100%; /* Position below the header */
+            right: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            z-index: 99; /* Below modal, above content */
+        }
+
+        .mobile-menu-items.active {
+            display: block;
+        }
+
+        .menu-items a {
+            display: block;
+            padding: 12px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .menu-items a:hover {
+            background: #f5f5f5;
+        }
+
+        .desktop-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .desktop-menu a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .search-container {
+            max-width: 800px;
+            margin: 2rem auto 0; /* Adjusted margin-bottom to 0 */
+            padding: 0 1rem;
+            position: sticky; /* Make search bar sticky */
+            top: 60px; /* Adjust based on header height */
+            z-index: 90; /* Ensure it stays above other content but below header */
+            background-color: #f5f7fa; /* Ensure background matches body for smooth scroll */
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode .search-container {
+            background-color: #121212;
+        }
+        
+        .search-bar {
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .search-bar button {
+            background: #214D56; /* Changed from purple */
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background: #1a3c46; /* Darker shade of new color */
+        }
+
+        .hero-tagline {
+            text-align: center;
+            font-size: 1.5rem; /* Adjusted font size for prominence */
+            color: #555; /* A softer color than black */
+            margin: 1rem auto 2rem auto; /* Top margin 1rem, bottom 2rem, auto for centering */
+            padding: 0 1rem; /* Add padding for smaller screens */
+            max-width: 800px; /* Constrain width for readability */
+            font-weight: 500;
+        }
+
+        body.dark-mode .hero-tagline {
+            color: #ccc;
+        }
+        
+        .assets-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .assets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            justify-content: start;
+        }
+        
+        .asset-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .asset-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .asset-image {
+            height: 180px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            overflow: hidden;
+        }
+
+        .asset-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .asset-image i {
+            font-size: 3rem;
+        }
+        
+        .asset-details {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .asset-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .asset-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex-grow: 1;
+            transition: color 0.3s;
+        }
+        
+        .asset-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #888;
+            transition: color 0.3s;
+        }
+        
+        .download-btn {
+            background: #214D56; /* Changed from purple */
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .download-btn:hover {
+            background: #1a3c46; /* Darker shade of new color */
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0;
+        }
+        
+        .page-btn {
+            background: white;
+            border: 1px solid #ddd;
+            color: #214D56; /* Changed from purple */
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .page-btn:hover {
+            background: #214D56; /* Changed from purple */
+            color: white;
+            border-color: #214D56; /* Changed from purple */
+        }
+        
+        .page-btn.active {
+            background: #214D56; /* Changed from purple */
+            color: white;
+            border-color: #214D56; /* Changed from purple */
+        }
+        
+        footer {
+            background: #2a2a2a;
+            color: #ddd;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .copyright {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #999;
+        }
+        
+        .page-content-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #214D56; /* Changed from purple */
+            text-align: center;
+            transition: color 0.3s;
+        }
+        
+        .page-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s;
+        }
+        
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: #214D56; /* Changed from purple */
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: #1a3c46; /* Darker shade of new color */
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #214D56; /* Changed from purple */
+            transition: color 0.3s;
+        }
+        
+        .faq-answer {
+            color: #555;
+            line-height: 1.6;
+            transition: color 0.3s;
+        }
+        
+        .blog-post {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #214D56; /* Changed from purple */
+            transition: color 0.3s;
+            text-align: left; /* Changed from center to left */
+        }
+        
+        .blog-meta {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-excerpt {
+            margin-bottom: 1rem;
+            color: #555;
+            line-height: 1.6;
+            transition: color 0.3s;
+        }
+        
+        .read-more {
+            color: #214D56; /* Changed from purple */
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Digital Watch Styles */
+        #digital-watch {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(33, 77, 86, 0.7); /* Using new color with transparency */
+            backdrop-filter: blur(5px); /* Glossy effect */
+            -webkit-backdrop-filter: blur(5px); /* For Safari */
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Ensure it's on top */
+        }
+
+        /* Scroll to Top Button Styles */
+        #scroll-to-top-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #214D56; /* Matching header/button color */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0; /* Initially hidden */
+            visibility: hidden; /* Initially hidden */
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, background 0.3s;
+            z-index: 999; /* Above other content, below modals */
+        }
+
+        #scroll-to-top-btn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #scroll-to-top-btn:hover {
+            background: #1a3c46; /* Darker shade on hover */
+        }
+        
+        @media (max-width: 768px) {
+            .logo { font-size: 1.5rem; } /* Adjusted for smaller screens */
+            /* Removed tagline from media query as it's moved */
+            .assets-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+            .page-title { font-size: 1.8rem; }
+            header {
+                padding: 0.7rem 1rem; /* Adjust padding for smaller screens */
+            }
+            .header-right {
+                gap: 10px; /* Smaller gap on mobile */
+            }
+            .mobile-menu-items {
+                right: 10px; /* Adjust position for smaller screens */
+            }
+            #digital-watch {
+                font-size: 1.2rem;
+                padding: 8px 12px;
+                bottom: 10px;
+                left: 10px;
+            }
+            #scroll-to-top-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .search-bar { flex-direction: column; border-radius: 8px; }
+            .search-bar input { border-radius: 8px 8px 0 0; }
+            .search-bar button { padding: 0.75rem; border-radius: 0 0 8px 8px; }
+            .assets-grid { grid-template-columns: 1fr; }
+            .pagination { flex-wrap: wrap; }
+            .page-btn { margin: 0.25rem; }
+            .page-title { font-size: 1.5rem; }
+            .logo { font-size: 1.2rem; } /* Further adjusted for very small screens */
+            .hero-tagline { font-size: 1.2rem; } /* Adjusted for smaller screens */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="modal-overlay" id="assetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalAssetTitle">Asset Title</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="" alt="Asset Image" class="modal-image" id="modalAssetImage">
+                <div class="modal-description" id="modalAssetDescription">Asset description will appear here.</div>
+            </div>
+            <div class="modal-footer">
+                <button class="download-btn" id="modalDownloadBtn">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="blogPostModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalBlogPostTitle">Blog Post Title</h3>
+                <button class="modal-close" id="modalBlogPostClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalBlogPostContent"></div>
+            </div>
+            <div class="modal-footer">
+                </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-left">
+            <div class="logo">5K Digital Studio</div>
+            <!-- Removed .tagline from here -->
+        </div>
+        
+        <div class="header-right">
+            <button class="dark-mode-toggle" id="darkModeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            
+            <div class="desktop-menu" id="desktop-menu">
+                <a id="desktop-contact-link"><i class="fas fa-envelope"></i> Contact</a>
+                <a id="desktop-faq-link"><i class="fas fa-question-circle"></i> FAQ</a>
+                <a id="desktop-blog-link"><i class="fas fa-blog"></i> Blog</a>
+                <a id="desktop-download-guide-link"><i class="fas fa-download"></i> How to Download</a>
+            </div>
+            
+            <button class="menu-btn" id="menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+        
+        <div class="mobile-menu-items" id="mobile-menu-items">
+            <div class="menu-items">
+                <a id="mobile-contact-link"><i class="fas fa-envelope"></i> Contact</a>
+                <a id="mobile-faq-link"><i class="fas fa-question-circle"></i> FAQ</a>
+                <a id="mobile-blog-link"><i class="fas fa-blog"></i> Blog</a>
+                <a id="mobile-download-guide-link"><i class="fas fa-download"></i> How to Download</a>
+            </div>
+        </div>
+    </header>
+    
+    <main id="content-area" style="flex: 1; display: flex; flex-direction: column;"></main>
+    
+    <footer>
+        <div class="footer-content">
+            <p>5K Digital Studio provides high-quality digital assets and courses for creators.</p>
+            <p class="copyright">&copy; 2025 5K Digital Studio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div id="digital-watch"></div>
+    <button id="scroll-to-top-btn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBJa8xvmu19M-tokkjT8Y4R9diGM4FG-Go",
+            authDomain: "k-digital-studio-64d0f.firebaseapp.com",
+            projectId: "k-digital-studio-64d0f",
+            storageBucket: "k-digital-studio-64d0f.appspot.com",
+            messagingSenderId: "986818037155",
+            appId: "1:986818037155:web:c41803fe1f9214477c0616",
+            measurementId: "G-ZJ43QR9W71"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+        
+        // --- GLOBAL STATE ---
+        let allAssets = [];
+        let faqItems = [];
+        let blogPosts = [];
+        
+        let filteredAssets = [];
+        let currentPage = 1;
+        const assetsPerPage = 8;
+        let currentModalAssetId = null;
+        let userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone; // Default to browser's timezone
+        
+        // --- DOM Elements ---
+        const contentArea = document.getElementById('content-area');
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenuItems = document.getElementById('mobile-menu-items');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const assetModal = document.getElementById('assetModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalAssetTitle = document.getElementById('modalAssetTitle');
+        const modalAssetImage = document.getElementById('modalAssetImage');
+        const modalAssetDescription = document.getElementById('modalAssetDescription');
+        const modalDownloadBtn = document.getElementById('modalDownloadBtn');
+        const digitalWatch = document.getElementById('digital-watch');
+        // New DOM Elements for Blog Post Modal
+        const blogPostModal = document.getElementById('blogPostModal');
+        const modalBlogPostClose = document.getElementById('modalBlogPostClose');
+        const modalBlogPostTitle = document.getElementById('modalBlogPostTitle');
+        const modalBlogPostContent = document.getElementById('modalBlogPostContent');
+        const scrollToTopBtn = document.getElementById('scroll-to-top-btn'); // Get the new button
+
+        // --- INITIALIZATION ---
+        async function init() {
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+
+            // Fetch all data from Firebase and user timezone concurrently
+            await Promise.all([
+                fetchAssets(),
+                fetchFaqs(),
+                fetchBlogPosts(),
+                fetchUserTimeZone()
+            ]);
+            
+            // Set up static event listeners
+            setupStaticEventListeners();
+            setupScrollToTop(); // Setup scroll-to-top functionality
+
+            // Initial render based on URL hash or default to index
+            const view = window.location.hash.substring(1) || 'index';
+            renderView(view);
+
+            // Start digital watch
+            updateDigitalWatch();
+            setInterval(updateDigitalWatch, 1000);
+        }
+
+        // Dark mode toggle functionality
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        // Asset Modal functionality
+        modalClose.addEventListener('click', () => {
+            assetModal.classList.remove('active');
+        });
+
+        modalDownloadBtn.addEventListener('click', () => {
+            if (currentModalAssetId) {
+                downloadAsset(currentModalAssetId);
+                assetModal.classList.remove('active');
+            }
+        });
+
+        assetModal.addEventListener('click', (e) => {
+            if (e.target === assetModal) {
+                assetModal.classList.remove('active');
+            }
+        });
+
+        function showAssetModal(asset) {
+            currentModalAssetId = asset.id;
+            modalAssetTitle.textContent = asset.title;
+            modalAssetDescription.textContent = asset.description;
+            
+            if (asset.image) {
+                modalAssetImage.src = asset.image;
+                modalAssetImage.style.display = 'block';
+            } else {
+                modalAssetImage.style.display = 'none';
+            }
+            
+            assetModal.classList.add('active');
+        }
+
+        // Blog Post Modal functionality
+        modalBlogPostClose.addEventListener('click', () => {
+            blogPostModal.classList.remove('active');
+        });
+
+        blogPostModal.addEventListener('click', (e) => {
+            if (e.target === blogPostModal) {
+                blogPostModal.classList.remove('active');
+            }
+        });
+
+        function showBlogPostModal(post) {
+            modalBlogPostTitle.textContent = post.title;
+            modalBlogPostContent.innerHTML = post.content || post.excerpt; // Fallback to excerpt if full content isn't there
+            blogPostModal.classList.add('active');
+        }
+
+
+        async function fetchAssets() {
+            try {
+                const snapshot = await db.collection('products').get();
+                allAssets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                filteredAssets = [...allAssets];
+            } catch (error) {
+                console.error("Error fetching assets:", error);
+                console.log("Error loading products. Please try again later.");
+            }
+        }
+
+        async function fetchFaqs() {
+            try {
+                const snapshot = await db.collection('faqs').get();
+                faqItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (error) {
+                console.error("Error fetching FAQs:", error);
+                console.log("Error loading FAQs. Please try again later.");
+            }
+        }
+
+        async function fetchBlogPosts() {
+            try {
+                const snapshot = await db.collection('blogs').orderBy('date', 'desc').get();
+                blogPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (error) {
+                console.error("Error fetching blog posts:", error);
+                console.log("Error loading blog posts. Please try again later.");
+            }
+        }
+
+        // Function to fetch user's timezone based on IP
+        async function fetchUserTimeZone() {
+            try {
+                const response = await fetch('http://ip-api.com/json');
+                const data = await response.json();
+                if (data.status === 'success' && data.timezone) {
+                    userTimeZone = data.timezone;
+                    console.log("User timezone detected:", userTimeZone);
+                } else {
+                    console.error("Failed to detect timezone via IP API:", data.message || "Unknown error");
+                }
+            } catch (error) {
+                console.error("Error fetching IP-based timezone:", error);
+            }
+        }
+
+        function setupStaticEventListeners() {
+            menuBtn.addEventListener('click', () => mobileMenuItems.classList.toggle('active'));
+
+            document.querySelector('.logo').addEventListener('click', () => renderView('index'));
+            
+            // Setup navigation links
+            ['desktop-contact-link', 'mobile-contact-link'].forEach(id => document.getElementById(id).addEventListener('click', () => renderView('contact')));
+            ['desktop-faq-link', 'mobile-faq-link'].forEach(id => document.getElementById(id).addEventListener('click', () => renderView('faq')));
+            ['desktop-blog-link', 'mobile-blog-link'].forEach(id => document.getElementById(id).addEventListener('click', () => renderView('blog')));
+            ['desktop-download-guide-link', 'mobile-download-guide-link'].forEach(id => document.getElementById(id).addEventListener('click', () => renderView('how-to-download')));
+
+
+            // Handle browser back/forward buttons
+            window.addEventListener('popstate', () => {
+                const view = window.location.hash.substring(1) || 'index';
+                renderView(view, false); // Don't push history state again
+            });
+        }
+        
+        function setupScrollToTop() {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 200) { // Show button after scrolling down 200px
+                    scrollToTopBtn.classList.add('show');
+                } else {
+                    scrollToTopBtn.classList.remove('show');
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth' // Smooth scroll animation
+                });
+            });
+        }
+
+        function renderView(view, pushState = true) {
+            if (mobileMenuItems.classList.contains('active')) {
+                mobileMenuItems.classList.remove('active');
+            }
+            
+            if (pushState) {
+                const path = view === 'index' ? window.location.pathname : `#${view}`;
+                window.history.pushState({view}, '', path);
+            }
+
+            switch(view) {
+                case 'contact':
+                    renderContactPage();
+                    break;
+                case 'faq':
+                    renderFAQPage();
+                    break;
+                case 'blog':
+                    renderBlogPage();
+                    break;
+                case 'how-to-download':
+                    renderHowToDownloadPage();
+                    break;
+                default:
+                    renderIndexPage();
+                    break;
+            }
+        }
+
+        // --- PAGE RENDERERS ---
+        
+        function renderIndexPage() {
+            contentArea.innerHTML = `
+                <div class="search-container">
+                    <div class="search-bar">
+                        <input type="text" id="search-input" placeholder="Search for assets, courses...">
+                        <button id="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="hero-tagline">Premium Digital Assets & Courses</div>
+                <div class="assets-container">
+                    <div class="assets-grid" id="assets-grid"></div>
+                    <div class="pagination" id="pagination"></div>
+                </div>
+            `;
+            
+            document.getElementById('search-btn').addEventListener('click', handleSearch);
+            document.getElementById('search-input').addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') handleSearch();
+            });
+            
+            renderAssets();
+            renderPagination();
+        }
+        
+        function renderContactPage() {
+            contentArea.innerHTML = `
+                <div class="page-content-container">
+                    <h1 class="page-title">Contact Us</h1>
+                    <div class="page-content">
+                        <p>Have questions or need support? Reach out to our team using the form below.</p>
+                        <form class="contact-form" id="contact-form">
+                            <div class="form-group"><label for="name">Your Name</label><input type="text" id="name" required></div>
+                            <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" required></div>
+                            <div class="form-group"><label for="subject">Subject</label><input type="text" id="subject" required></div>
+                            <div class="form-group"><label for="message">Message</label><textarea id="message" required></textarea></div>
+                            <button type="submit" class="submit-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('contact-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+
+                try {
+                    await db.collection('contactMessages').add({
+                        name,
+                        email,
+                        subject,
+                        message,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    console.log('Message sent successfully!');
+                    alert('Thank you for your message! We will get back to you soon.'); // Use alert for user feedback
+                    e.target.reset();
+                } catch (error) {
+                    console.error("Error sending message:", error);
+                    alert("Error sending message. Please try again later."); // Use alert for user feedback
+                }
+            });
+        }
+        
+        function renderFAQPage() {
+            let faqHTML = faqItems.length > 0 
+                ? faqItems.map(item => `
+                    <div class="faq-item">
+                        <div class="faq-question">${item.question}</div>
+                        <div class="faq-answer">${item.answer}</div>
+                    </div>`).join('')
+                : '<p>No FAQs have been added yet.</p>';
+            
+            contentArea.innerHTML = `
+                <div class="page-content-container">
+                    <h1 class="page-title">Frequently Asked Questions</h1>
+                    <div class="page-content">${faqHTML}</div>
+                </div>
+            `;
+        }
+        
+        function renderBlogPage() {
+            let blogHTML = blogPosts.length > 0
+                ? blogPosts.map(post => `
+                    <div class="blog-post">
+                        <h2 class="blog-title" data-id="${post.id}" style="cursor: pointer;">${post.title}</h2>
+                        <div class="blog-meta">Posted on ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+                        <p class="blog-excerpt">${post.excerpt}</p>
+                        <a href="#" class="read-more" data-id="${post.id}">Read more →</a>
+                    </div>`).join('')
+                : '<p>No blog posts have been added yet.</p>';
+
+            contentArea.innerHTML = `
+                <div class="page-content-container">
+                    <h1 class="page-title">Blog</h1>
+                    <div class="page-content">${blogHTML}</div>
+                </div>
+            `;
+
+            // Add event listeners to blog titles and "Read more" links
+            document.querySelectorAll('.blog-title, .read-more').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent default link behavior
+                    const postId = this.getAttribute('data-id');
+                    const post = blogPosts.find(p => p.id === postId);
+                    if (post) {
+                        showBlogPostModal(post);
+                    }
+                });
+            });
+        }
+
+        function renderHowToDownloadPage() {
+            contentArea.innerHTML = `
+                <div class="page-content-container">
+                    <h1 class="page-title">How to Download Assets</h1>
+                    <div class="page-content">
+                        <p>Downloading digital assets from 5K Digital Studio is a simple and straightforward process. Follow these steps to get your desired files:</p>
+                        
+                        <h3>Step 1: Browse or Search for Assets</h3>
+                        <p>On the homepage, you can browse through various categories of digital assets or use the search bar to find a specific asset or course.</p>
+                        
+                        <h3>Step 2: Select Your Desired Asset</h3>
+                        <p>Once you find an asset you're interested in, click on its card to view more details. A modal window will pop up showing the asset's title, a larger image (if available), and a detailed description.</p>
+                        
+                        <h3>Step 3: Click the Download Button</h3>
+                        <p>Inside the asset's detail modal, you will see a "Download" button. Click this button to initiate the download. If a direct download link is available, your browser will typically start the download automatically.</p>
+                        
+                        <h3>Step 4: Complete a Quick Verification</h3>
+                        <p>To ensure the security and integrity of our digital assets, and to prevent automated downloads, we require a quick verification. This helps us maintain a high-quality service for all users. Please complete the short verification step that appears.</p>
+
+                        <h3>Step 5: Confirm and Save</h3>
+                        <p>Depending on your browser settings, you might be prompted to choose a location to save the file. Select your preferred destination and confirm the download.</p>
+                        
+                        <h3>Troubleshooting Tips:</h3>
+                        <ul>
+                            <li><strong>Download Not Starting:</strong> Ensure your browser's pop-up blocker is not preventing the download.</li>
+                            <li><strong>Slow Download:</strong> Your internet connection speed may affect download times.</li>
+                            <li><strong>Corrupted File:</strong> If the downloaded file is corrupted, try downloading it again. If the problem persists, please contact our support team via the <a href="#contact">Contact Us</a> page.</li>
+                        </ul>
+                        <p>If you encounter any issues not covered here, feel free to visit our <a href="#faq">FAQ page</a> or <a href="#contact">contact us directly</a>.</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // --- ASSET RENDERING & PAGINATION ---
+        
+        function renderAssets() {
+            const assetsGrid = document.getElementById('assets-grid');
+            assetsGrid.innerHTML = '';
+            
+            const assetsToShow = filteredAssets.slice((currentPage - 1) * assetsPerPage, currentPage * assetsPerPage);
+            
+            if (assetsToShow.length === 0) {
+                assetsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No assets found.</p>';
+                return;
+            }
+            
+            assetsToShow.forEach(asset => {
+                const assetCard = document.createElement('div');
+                assetCard.className = 'asset-card';
+                
+                const imageContent = asset.image
+                    ? `<img src="${asset.image}" alt="${asset.title}">`
+                    : `<i class="${asset.icon || 'fas fa-file'}"></i>`;
+
+                assetCard.innerHTML = `
+                    <div class="asset-image">${imageContent}</div>
+                    <div class="asset-details">
+                        <h3 class="asset-title">${asset.title}</h3>
+                        <p class="asset-description">${asset.description}</p>
+                        <div class="asset-meta">
+                            <span>${(asset.downloads || 0).toLocaleString()} downloads</span>
+                            <button class="download-btn" data-id="${asset.id}">Download</button>
+                        </div>
+                    </div>
+                `;
+                assetsGrid.appendChild(assetCard);
+
+                // Add click event to show modal when clicking anywhere on the card
+                assetCard.addEventListener('click', (e) => {
+                    // Don't trigger if clicking on the download button
+                    if (!e.target.classList.contains('download-btn')) {
+                        showAssetModal(asset);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent the card click event from firing
+                    downloadAsset(this.getAttribute('data-id'));
+                });
+            });
+        }
+        
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            const totalPages = Math.ceil(filteredAssets.length / assetsPerPage);
+            
+            if (totalPages <= 1) return;
+            
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    renderAssets();
+                    renderPagination();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+                pagination.appendChild(pageBtn);
+            }
+        }
+        
+        function handleSearch() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+            
+            filteredAssets = allAssets.filter(asset => 
+                asset.title.toLowerCase().includes(searchTerm) || 
+                asset.description.toLowerCase().includes(searchTerm) ||
+                asset.type.toLowerCase().includes(searchTerm)
+            );
+            
+            currentPage = 1;
+            renderAssets();
+            renderPagination();
+        }
+        
+        function downloadAsset(assetId) {
+            const asset = allAssets.find(a => a.id === assetId);
+            if (asset) {
+                if (asset.downloadLink) {
+                    // Update download count in Firestore
+                    db.collection('products').doc(assetId).update({
+                        downloads: firebase.firestore.FieldValue.increment(1),
+                        lastDownloaded: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then(() => {
+                        // Open download link after updating count
+                        window.open(asset.downloadLink, '_blank');
+                    }).catch(error => {
+                        console.error("Error updating download count:", error);
+                        window.open(asset.downloadLink, '_blank');
+                    });
+                } else {
+                    console.log(`Downloading: ${asset.title}\n\n(This is a demo. No file will be downloaded as no download link was provided.)`);
+                }
+            }
+        }
+
+        function updateDigitalWatch() {
+            const now = new Date();
+            const options = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+                timeZone: userTimeZone
+            };
+            digitalWatch.textContent = now.toLocaleTimeString('en-US', options);
+        }
+        
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
