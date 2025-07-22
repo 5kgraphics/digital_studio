@@ -901,7 +901,8 @@
         function showAssetModal(asset) {
             currentModalAssetId = asset.id;
             modalAssetTitle.textContent = asset.title;
-            modalAssetDescription.textContent = asset.description;
+            // Changed from textContent to innerHTML to render rich text
+            modalAssetDescription.innerHTML = asset.description; 
             
             if (asset.image) {
                 modalAssetImage.src = asset.image;
