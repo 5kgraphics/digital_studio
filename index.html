@@ -5,33 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>5K Digital Studio - Download Digital Assets & Courses</title>
     <style>
+        /* Base & Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: #f5f7fa;
-            color: #333;
+            background-color: #f7f9fc; /* Light, clean background */
+            color: #2c3e50; /* Dark blue for primary text */
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
+        /* Dark Mode Styles */
         body.dark-mode {
-            background-color: #121212;
-            color: #f5f5f5;
+            background-color: #1a202c; /* Dark charcoal */
+            color: #e2e8f0; /* Light gray for dark mode text */
         }
 
         body.dark-mode .asset-card,
         body.dark-mode .page-content,
-        body.dark-mode .search-bar {
-            background-color: #1e1e1e;
-            color: #f5f5f5;
+        body.dark-mode .search-bar,
+        body.dark-mode .modal-content {
+            background-color: #2d3748; /* Darker charcoal for elements */
+            color: #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
 
         body.dark-mode .asset-description,
@@ -39,33 +43,82 @@
         body.dark-mode .page-content p,
         body.dark-mode .faq-answer,
         body.dark-mode .blog-excerpt {
-            color: #ccc;
+            color: #a0aec0; /* Muted gray for secondary text */
         }
 
         body.dark-mode .search-bar input {
-            background-color: #1e1e1e;
-            color: #f5f5f5;
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border-color: #4a5568;
         }
 
         body.dark-mode .page-title,
         body.dark-mode .asset-title,
         body.dark-mode .faq-question,
-        body.dark-mode .blog-title {
-            color: #214D56; /* Changed from purple */
+        body.dark-mode .blog-title,
+        body.dark-mode .modal-title {
+            color: #4CAF50; /* Vibrant green accent for dark mode titles */
         }
 
         body.dark-mode .mobile-menu-items {
-            background-color: #1e1e1e;
+            background-color: #2d3748;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
         body.dark-mode .menu-items a {
-            color: #f5f5f5;
+            color: #e2e8f0;
         }
 
         body.dark-mode .menu-items a:hover {
-            background-color: #333;
+            background-color: #4a5568;
+        }
+
+        body.dark-mode .modal-header,
+        body.dark-mode .modal-footer {
+            border-color: #4a5568;
         }
         
+        body.dark-mode .modal-close {
+            color: #a0aec0;
+        }
+
+        body.dark-mode .download-btn,
+        body.dark-mode .submit-btn,
+        body.dark-mode .search-bar button,
+        body.dark-mode .page-btn.active,
+        body.dark-mode .page-btn:hover {
+            background-color: #4CAF50; /* Green accent */
+            border-color: #4CAF50;
+        }
+
+        body.dark-mode .download-btn:hover,
+        body.dark-mode .submit-btn:hover,
+        body.dark-mode .search-bar button:hover {
+            background-color: #43A047; /* Darker green */
+        }
+
+        body.dark-mode .page-btn {
+            background-color: #4a5568;
+            border-color: #4a5568;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode footer {
+            background: #2d3748;
+            color: #a0aec0;
+        }
+
+        body.dark-mode .social-icons a {
+            color: #e2e8f0;
+        }
+        body.dark-mode .social-icons a:hover {
+            color: #4CAF50;
+        }
+        body.dark-mode .copyright {
+            color: #6a7688;
+        }
+
+
         /* Popup Modal Styles */
         .modal-overlay {
             position: fixed;
@@ -73,14 +126,14 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.6); /* Slightly softer overlay */
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease-out;
         }
 
         .modal-overlay.active {
@@ -91,304 +144,343 @@
         .modal-content {
             background: white;
             width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            border-radius: 8px;
+            max-width: 650px;
+            max-height: 85vh;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(30px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Springy effect */
             display: flex;
             flex-direction: column;
         }
 
         .modal-overlay.active .modal-content {
-            transform: translateY(0);
-        }
-
-        body.dark-mode .modal-content {
-            background: #1e1e1e;
-            color: #f5f5f5;
+            transform: translateY(0) scale(1);
         }
 
         .modal-header {
-            padding: 1rem;
-            border-bottom: 1px solid #eee;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid #edf2f7; /* Light border */
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        body.dark-mode .modal-header {
-            border-bottom: 1px solid #333;
-        }
-
         .modal-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #214D56; /* Changed from purple */
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2980b9; /* A professional blue */
         }
 
         .modal-close {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
-            color: #666;
+            color: #7f8c8d;
+            padding: 5px 10px;
+            border-radius: 50%;
+            transition: background 0.2s ease, color 0.2s ease;
         }
 
-        body.dark-mode .modal-close {
-            color: #ccc;
+        .modal-close:hover {
+            background: #e0e6eb;
+            color: #34495e;
         }
 
         .modal-body {
             padding: 1.5rem;
             overflow-y: auto;
             flex-grow: 1;
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
         .modal-image {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
-            margin-bottom: 1rem;
-            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         }
 
         .modal-description {
             margin-bottom: 1.5rem;
-            line-height: 1.6;
         }
 
         .modal-footer {
-            padding: 1rem;
-            border-top: 1px solid #eee;
+            padding: 1.2rem 1.5rem;
+            border-top: 1px solid #edf2f7;
             display: flex;
             justify-content: flex-end;
         }
-
-        body.dark-mode .modal-footer {
-            border-top: 1px solid #333;
-        }
         
+        /* Header */
         header {
-            background: linear-gradient(135deg, #214D56 0%, #214D56 100%); /* Changed from purple */
+            background: linear-gradient(135deg, #2980b9 0%, #3498db 100%); /* Blue gradient */
             color: white;
-            padding: 0.7rem 2rem; /* Reduced thickness */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: sticky; /* Make header sticky */
-            top: 0; /* Stick to the top */
-            z-index: 100; /* Ensure it stays above other content */
-            display: flex; /* Use flexbox for layout */
-            justify-content: space-between; /* Space out logo and menu */
-            align-items: center; /* Vertically align items */
+            padding: 1rem 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .header-left {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Align logo and tagline to the left */
+            align-items: flex-start;
         }
 
         .logo {
-            font-size: 1.5rem; /* Reduced font size to small */
-            font-weight: 700;
-            margin-bottom: 0.2rem; /* Reduced margin */
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.2rem;
             cursor: pointer;
+            letter-spacing: -0.5px;
         }
-        
-        /* Removed .tagline from header */
         
         /* Menu Styles */
         .header-right {
             display: flex;
             align-items: center;
-            gap: 15px; /* Space between dark mode toggle and menu */
+            gap: 20px;
         }
 
-        .dark-mode-toggle {
-            background: rgba(255, 255, 255, 0.2);
+        .dark-mode-toggle, .menu-btn {
+            background: rgba(255, 255, 255, 0.25);
             border: none;
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0; /* Prevent shrinking */
+            flex-shrink: 0;
+            font-size: 1.2rem;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
-        body.dark-mode .dark-mode-toggle {
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .menu-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: block; /* Show on mobile */
-            flex-shrink: 0; /* Prevent shrinking */
+        .dark-mode-toggle:hover, .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
         }
 
         .desktop-menu {
-            display: none; /* Hidden on mobile */
+            display: none;
         }
 
         @media (min-width: 769px) {
             .menu-btn {
-                display: none; /* Hide on desktop */
+                display: none;
             }
             .desktop-menu {
-                display: flex; /* Show on desktop */
-                gap: 15px;
+                display: flex;
+                gap: 20px;
             }
         }
 
         .mobile-menu-items {
             display: none;
             position: absolute;
-            top: 100%; /* Position below the header */
+            top: 100%;
             right: 20px;
             background: white;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            z-index: 99; /* Below modal, above content */
+            z-index: 99;
+            min-width: 180px;
+            transform-origin: top right;
+            transform: scale(0.9) translateY(-10px);
+            opacity: 0;
+            transition: transform 0.2s ease-out, opacity 0.2s ease-out;
         }
 
         .mobile-menu-items.active {
             display: block;
+            transform: scale(1) translateY(0);
+            opacity: 1;
         }
 
         .menu-items a {
-            display: block;
+            display: flex;
+            align-items: center;
             padding: 12px 20px;
-            color: #333;
+            color: #34495e;
             text-decoration: none;
-            transition: background 0.2s;
+            transition: background 0.2s ease;
             cursor: pointer;
+            gap: 10px;
         }
 
         .menu-items a:hover {
-            background: #f5f5f5;
+            background: #ecf0f1;
         }
 
         .desktop-menu a {
             color: white;
             text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            transition: background 0.2s;
+            padding: 10px 18px;
+            border-radius: 25px;
+            transition: background 0.2s ease, transform 0.2s ease;
             cursor: pointer;
+            font-weight: 500;
         }
 
         .desktop-menu a:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.35);
+            transform: translateY(-1px);
         }
         
+        /* Search and Sort */
         .search-container {
-            max-width: 800px;
-            margin: 2rem auto 0; /* Adjusted margin-bottom to 0 */
-            padding: 0 1rem;
-            position: sticky; /* Make search bar sticky */
-            top: 60px; /* Adjust based on header height */
-            z-index: 90; /* Ensure it stays above other content but below header */
-            background-color: #f5f7fa; /* Ensure background matches body for smooth scroll */
+            max-width: 850px;
+            margin: 2.5rem auto 0;
+            padding: 0 1.5rem;
+            position: sticky;
+            top: 75px; /* Adjusted to be below header */
+            z-index: 90;
+            background-color: transparent; /* Overlay effect */
             transition: background-color 0.3s, color 0.3s;
-        }
-
-        body.dark-mode .search-container {
-            background-color: #121212;
         }
         
         .search-bar {
             display: flex;
             background: white;
-            border-radius: 50px;
+            border-radius: 30px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         .search-bar input {
             flex: 1;
-            padding: 1rem 1.5rem;
+            padding: 1.1rem 1.8rem;
             border: none;
             outline: none;
-            font-size: 1rem;
+            font-size: 1.05rem;
+            color: #34495e;
             transition: background-color 0.3s, color 0.3s;
         }
         
         .search-bar button {
-            background: #214D56; /* Changed from purple */
+            background: #27ae60; /* A fresh green */
             color: white;
             border: none;
-            padding: 0 1.5rem;
+            padding: 0 1.8rem;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s ease, transform 0.1s ease;
+            font-size: 1.1rem;
         }
         
         .search-bar button:hover {
-            background: #1a3c46; /* Darker shade of new color */
+            background: #229a55; /* Darker green */
+            transform: scale(1.02);
+        }
+
+        .sort-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 1.5rem;
+            justify-content: flex-end; /* Align to the right */
+        }
+
+        .sort-container label {
+            font-size: 0.95rem;
+            color: #555;
+            font-weight: 600;
+        }
+        body.dark-mode .sort-container label {
+            color: #b0b9c5;
+        }
+
+        .sort-dropdown {
+            padding: 0.7rem 1rem;
+            border: 1px solid #dce2e8;
+            border-radius: 8px;
+            background-color: white;
+            font-size: 0.95rem;
+            color: #34495e;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
+        }
+        body.dark-mode .sort-dropdown {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            border-color: #4a5568;
+        }
+
+        .sort-dropdown:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
 
         .hero-tagline {
             text-align: center;
-            font-size: 1.5rem; /* Adjusted font size for prominence */
-            color: #555; /* A softer color than black */
-            margin: 1rem auto 2rem auto; /* Top margin 1rem, bottom 2rem, auto for centering */
-            padding: 0 1rem; /* Add padding for smaller screens */
-            max-width: 800px; /* Constrain width for readability */
+            font-size: 1.6rem;
+            color: #555;
+            margin: 1.5rem auto 3rem auto;
+            padding: 0 1.5rem;
+            max-width: 900px;
             font-weight: 500;
+            line-height: 1.4;
+            letter-spacing: -0.2px;
         }
 
         body.dark-mode .hero-tagline {
-            color: #ccc;
+            color: #b0b9c5;
         }
         
+        /* Assets Grid */
         .assets-container {
-            /* Changed from max-width: 1200px; margin: 2rem auto; */
-            width: 100%; /* Take full width */
-            padding: 2rem 1rem; /* Add padding on sides */
+            width: 100%;
+            padding: 2.5rem 1.5rem;
+            flex-grow: 1; /* Allow container to take available space */
         }
         
         .assets-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
             width: 100%;
-            justify-content: start;
+            max-width: 1200px; /* Constrain grid width */
+            margin: 0 auto; /* Center the grid */
+            justify-content: center;
         }
         
         .asset-card {
             background: white;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
             display: flex;
             flex-direction: column;
             cursor: pointer;
         }
         
         .asset-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
         }
         
         .asset-image {
-            height: 180px;
-            background-color: #eee;
+            height: 200px;
+            background-color: #ecf0f1; /* Light gray placeholder */
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #999;
+            color: #bdc3c7; /* Muted icon color */
             overflow: hidden;
         }
 
@@ -396,10 +488,14 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .asset-card:hover .asset-image img {
+            transform: scale(1.05);
         }
         
         .asset-image i {
-            font-size: 3rem;
+            font-size: 3.5rem;
         }
         
         .asset-details {
@@ -410,18 +506,17 @@
         }
         
         .asset-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
+            font-size: 1.35rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            color: #2c3e50; /* Darker blue */
             transition: color 0.3s;
         }
         
         .asset-description {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            /* Removed -webkit-line-clamp and -webkit-box-orient for character-based truncation */
-            overflow: hidden; /* Still keep overflow hidden for general text flow */
+            color: #61778d; /* Muted gray for description */
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
             flex-grow: 1;
             transition: color 0.3s;
         }
@@ -431,99 +526,178 @@
             justify-content: space-between;
             align-items: center;
             font-size: 0.85rem;
-            color: #888;
+            color: #7f8c8d; /* Even more muted */
+            border-top: 1px solid #f2f2f2;
+            padding-top: 1rem;
+            margin-top: 0.5rem;
             transition: color 0.3s;
         }
         
         .download-btn {
-            background: #214D56; /* Changed from purple */
+            background: #3498db; /* Primary blue button */
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background 0.3s;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.1s ease;
         }
         
         .download-btn:hover {
-            background: #1a3c46; /* Darker shade of new color */
+            background: #2980b9; /* Darker blue */
+            transform: translateY(-1px);
         }
         
+        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
-            margin: 3rem 0;
+            margin: 3.5rem 0 2.5rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
         }
         
         .page-btn {
             background: white;
-            border: 1px solid #ddd;
-            color: #214D56; /* Changed from purple */
-            padding: 0.5rem 1rem;
-            margin: 0 0.25rem;
+            border: 1px solid #dce2e8;
+            color: #3498db;
+            padding: 0.6rem 1.1rem;
             cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 40px;
+            text-align: center;
         }
         
         .page-btn:hover {
-            background: #214D56; /* Changed from purple */
-            color: white;
-            border-color: #214D56; /* Changed from purple */
+            background: #eaf3fa;
+            color: #2980b9;
+            border-color: #aed6f1;
         }
         
         .page-btn.active {
-            background: #214D56; /* Changed from purple */
+            background: #3498db;
             color: white;
-            border-color: #214D56; /* Changed from purple */
+            border-color: #3498db;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
         }
         
+        /* Footer */
         footer {
-            background: #2a2a2a;
-            color: #ddd;
-            padding: 2rem 0;
+            background: #2c3e50; /* Dark blue from palette */
+            color: #e2e8f0;
+            padding: 2.5rem 0;
             text-align: center;
             margin-top: auto;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.08);
         }
         
         .footer-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 1.5rem;
+        }
+
+        .footer-content p {
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #a0aec0;
+        }
+
+        .social-icons {
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: #e2e8f0;
+            font-size: 2rem;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .social-icons a:hover {
+            color: #3498db; /* Primary blue hover */
+            transform: translateY(-3px);
         }
         
         .copyright {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: #999;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #7f8c8d;
         }
         
+        /* Page Content (Contact, FAQ, Blog, How to Download, About Us) */
         .page-content-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-            flex: 1;
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+            flex: 1; /* Allows content to push footer down */
         }
         
         .page-title {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #214D56; /* Changed from purple */
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #2980b9; /* Professional blue */
             text-align: center;
+            font-weight: 800;
+            letter-spacing: -0.8px;
             transition: color 0.3s;
         }
         
         .page-content {
             background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
             transition: background-color 0.3s;
         }
+
+        .page-content h3 {
+            font-size: 1.6rem;
+            color: #34495e;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .page-content p, .page-content ul li {
+            font-size: 1rem;
+            color: #5d6d7e;
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+        }
+        .page-content ul {
+            list-style-type: disc;
+            padding-left: 25px;
+            margin-bottom: 1.5rem;
+        }
+        .page-content ul li {
+            margin-bottom: 0.5rem;
+        }
+        .page-content a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+        .page-content a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
         
+        /* Contact Form */
         .contact-form {
             display: grid;
-            gap: 1.5rem;
+            gap: 1.8rem;
         }
         
         .form-group {
@@ -532,130 +706,170 @@
         }
         
         .form-group label {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.7rem;
             font-weight: 600;
+            color: #34495e;
+            font-size: 0.95rem;
         }
         
         .form-group input,
         .form-group textarea {
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 1rem;
+            border: 1px solid #dce2e8;
+            border-radius: 8px;
             font-size: 1rem;
+            color: #34495e;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            outline: none;
         }
         
         .form-group textarea {
-            min-height: 150px;
+            min-height: 180px;
             resize: vertical;
         }
         
         .submit-btn {
-            background: #214D56; /* Changed from purple */
+            background: #27ae60;
             color: white;
             border: none;
-            padding: 0.75rem;
-            border-radius: 4px;
-            font-size: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s ease, transform 0.1s ease;
+            margin-top: 1rem;
         }
         
         .submit-btn:hover {
-            background: #1a3c46; /* Darker shade of new color */
+            background: #229a55;
+            transform: translateY(-2px);
         }
         
+        /* FAQ */
         .faq-item {
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #edf2f7;
             padding-bottom: 1.5rem;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
         }
         
         .faq-question {
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: #214D56; /* Changed from purple */
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.8rem;
+            color: #2c3e50;
             transition: color 0.3s;
         }
         
         .faq-answer {
-            color: #555;
-            line-height: 1.6;
+            color: #5d6d7e;
+            line-height: 1.7;
+            font-size: 0.98rem;
             transition: color 0.3s;
         }
         
+        /* Blog */
         .blog-post {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #edf2f7;
+        }
+        .blog-post:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
         }
         
         .blog-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: #214D56; /* Changed from purple */
+            font-size: 1.8rem;
+            margin-bottom: 0.7rem;
+            color: #2c3e50;
             transition: color 0.3s;
-            text-align: left; /* Changed from center to left */
+            text-align: left;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .blog-title:hover {
+            color: #3498db;
         }
         
         .blog-meta {
-            color: #888;
+            color: #8da1b9;
             font-size: 0.9rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
+            font-style: italic;
         }
         
         .blog-excerpt {
-            margin-bottom: 1rem;
-            color: #555;
-            line-height: 1.6;
+            margin-bottom: 1.2rem;
+            color: #5d6d7e;
+            line-height: 1.7;
+            font-size: 0.98rem;
             transition: color 0.3s;
         }
         
         .read-more {
-            color: #214D56; /* Changed from purple */
+            color: #3498db;
             text-decoration: none;
             font-weight: 600;
+            transition: color 0.2s ease;
+        }
+        .read-more:hover {
+            color: #2980b9;
+            text-decoration: underline;
         }
 
         /* Digital Watch Styles */
         #digital-watch {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(33, 77, 86, 0.7); /* Using new color with transparency */
-            backdrop-filter: blur(5px); /* Glossy effect */
-            -webkit-backdrop-filter: blur(5px); /* For Safari */
+            bottom: 25px;
+            left: 25px;
+            background: rgba(44, 62, 80, 0.8); /* Dark blue with transparency */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             color: white;
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-size: 1.5rem;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 1.6rem;
             font-weight: bold;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1000; /* Ensure it's on top */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            z-index: 1000;
+            letter-spacing: 0.5px;
         }
 
         /* Scroll to Top Button Styles */
         #scroll-to-top-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #214D56; /* Matching header/button color */
+            bottom: 25px;
+            right: 25px;
+            background: #3498db; /* Primary blue */
             color: white;
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.5rem;
+            width: 55px;
+            height: 55px;
+            font-size: 1.6rem;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            opacity: 0; /* Initially hidden */
-            visibility: hidden; /* Initially hidden */
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, background 0.3s;
-            z-index: 999; /* Above other content, below modals */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, background 0.3s ease, transform 0.2s ease;
+            z-index: 999;
         }
 
         #scroll-to-top-btn.show {
@@ -664,51 +878,168 @@
         }
 
         #scroll-to-top-btn:hover {
-            background: #1a3c46; /* Darker shade on hover */
+            background: #2980b9;
+            transform: translateY(-3px);
+        }
+
+        /* WhatsApp Sticky Icon */
+        #whatsapp-sticky-btn {
+            position: fixed;
+            bottom: 90px; /* Adjust to be above scroll-to-top-btn */
+            right: 25px;
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #whatsapp-sticky-btn:hover {
+            background-color: #1DA851; /* Darker green on hover */
+            transform: scale(1.05);
         }
         
-        @media (max-width: 768px) {
-            .logo { font-size: 1.5rem; } /* Adjusted for smaller screens */
-            /* Removed tagline from media query as it's moved */
-            .assets-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-            .page-title { font-size: 1.8rem; }
-            header {
-                padding: 0.7rem 1rem; /* Adjust padding for smaller screens */
+        /* Responsive Adjustments */
+        @media (max-width: 900px) {
+            .assets-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1.5rem;
             }
+            .hero-tagline {
+                font-size: 1.4rem;
+            }
+            .page-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 0.8rem 1.5rem;
+            }
+            .logo { font-size: 1.6rem; }
             .header-right {
-                gap: 10px; /* Smaller gap on mobile */
+                gap: 15px;
             }
             .mobile-menu-items {
-                right: 10px; /* Adjust position for smaller screens */
+                right: 15px;
+            }
+            .search-container {
+                margin-top: 2rem;
+                padding: 0 1rem;
+                top: 70px;
+            }
+            .search-bar input {
+                padding: 0.9rem 1.2rem;
+                font-size: 0.95rem;
+            }
+            .search-bar button {
+                padding: 0 1.2rem;
+            }
+            .hero-tagline {
+                font-size: 1.3rem;
+                margin: 1.2rem auto 2.5rem auto;
+                padding: 0 1rem;
+            }
+            .assets-container {
+                padding: 2rem 1rem;
+            }
+            .assets-grid {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            }
+            .asset-image {
+                height: 180px;
+            }
+            .page-content-container {
+                margin: 2.5rem auto;
+                padding: 0 1rem;
+            }
+            .page-title {
+                font-size: 2rem;
+                margin-bottom: 1.8rem;
+            }
+            .page-content {
+                padding: 2rem;
+            }
+            .modal-content {
+                max-width: 95%;
             }
             #digital-watch {
-                font-size: 1.2rem;
-                padding: 8px 12px;
-                bottom: 10px;
-                left: 10px;
+                font-size: 1.4rem;
+                padding: 10px 15px;
+                bottom: 15px;
+                left: 15px;
             }
             #scroll-to-top-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 1.3rem;
-                bottom: 15px;
-                right: 15px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.4rem;
+                bottom: 18px;
+                right: 18px;
+            }
+            #whatsapp-sticky-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.8rem;
+                bottom: 65px;
+                right: 12px;
             }
         }
         
         @media (max-width: 480px) {
-            .search-bar { flex-direction: column; border-radius: 8px; }
-            .search-bar input { border-radius: 8px 8px 0 0; }
-            .search-bar button { padding: 0.75rem; border-radius: 0 0 8px 8px; }
+            .search-bar { flex-direction: column; border-radius: 10px; }
+            .search-bar input { border-radius: 10px 10px 0 0; padding: 1rem; }
+            .search-bar button { padding: 0.8rem; border-radius: 0 0 10px 10px; font-size: 1rem;}
             .assets-grid { grid-template-columns: 1fr; }
-            .pagination { flex-wrap: wrap; }
-            .page-btn { margin: 0.25rem; }
-            .page-title { font-size: 1.5rem; }
-            .logo { font-size: 1.2rem; } /* Further adjusted for very small screens */
-            .hero-tagline { font-size: 1.2rem; } /* Adjusted for smaller screens */
+            .pagination { flex-wrap: wrap; justify-content: center; gap: 0.5rem;}
+            .page-btn { margin: 0.2rem; padding: 0.5rem 0.9rem;}
+            .page-title { font-size: 1.8rem; }
+            .logo { font-size: 1.4rem; }
+            .hero-tagline { font-size: 1.1rem; margin-bottom: 2rem;}
+            .asset-details { padding: 1.2rem; }
+            .asset-title { font-size: 1.2rem; }
+            .asset-description { font-size: 0.9rem; }
+            .download-btn { padding: 0.5rem 1rem; font-size: 0.85rem;}
+            .page-content { padding: 1.5rem; }
+            .modal-header { padding: 1rem 1.2rem; }
+            .modal-title { font-size: 1.4rem; }
+            .modal-close { font-size: 1.6rem; }
+            .modal-body { padding: 1.2rem; }
+            .modal-image { height: 160px; margin-bottom: 1rem;}
+            .modal-footer { padding: 1rem 1.2rem; }
+            #digital-watch {
+                font-size: 1.1rem;
+                padding: 8px 10px;
+                bottom: 10px;
+                left: 10px;
+            }
+            #scroll-to-top-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                bottom: 12px;
+                right: 12px;
+            }
+            #whatsapp-sticky-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.8rem;
+                bottom: 65px;
+                right: 12px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="modal-overlay" id="assetModal">
@@ -743,9 +1074,8 @@
 
     <header>
         <div class="header-left">
-            <div class="logo">5K Digital Studio</div>
-            <!-- Removed .tagline from here -->
-        </div>
+            <div class="logo">5K Graphic Studio</div>
+            </div>
         
         <div class="header-right">
             <button class="dark-mode-toggle" id="darkModeToggle">
@@ -753,6 +1083,7 @@
             </button>
             
             <div class="desktop-menu" id="desktop-menu">
+                <a id="desktop-about-link"><i class="fas fa-info-circle"></i> About Us</a>
                 <a id="desktop-contact-link"><i class="fas fa-envelope"></i> Contact</a>
                 <a id="desktop-faq-link"><i class="fas fa-question-circle"></i> FAQ</a>
                 <a id="desktop-blog-link"><i class="fas fa-blog"></i> Blog</a>
@@ -764,6 +1095,7 @@
         
         <div class="mobile-menu-items" id="mobile-menu-items">
             <div class="menu-items">
+                <a id="mobile-about-link"><i class="fas fa-info-circle"></i> About Us</a>
                 <a id="mobile-contact-link"><i class="fas fa-envelope"></i> Contact</a>
                 <a id="mobile-faq-link"><i class="fas fa-question-circle"></i> FAQ</a>
                 <a id="mobile-blog-link"><i class="fas fa-blog"></i> Blog</a>
@@ -777,11 +1109,19 @@
     <footer>
         <div class="footer-content">
             <p>5K Digital Studio provides high-quality digital assets and courses for creators.</p>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/5kdigitalstudio" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@5kdigitalstudio" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://t.me/5kdigitalstudio" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+            </div>
             <p class="copyright">&copy; 2025 5K Digital Studio. All rights reserved.</p>
         </div>
     </footer>
 
     <div id="digital-watch"></div>
+    <a href="https://wa.me/2348179977737" target="_blank" id="whatsapp-sticky-btn" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
     <button id="scroll-to-top-btn" title="Go to top">
         <i class="fas fa-arrow-up"></i>
     </button>
@@ -796,7 +1136,7 @@
             apiKey: "AIzaSyBJa8xvmu19M-tokkjT8Y4R9diGM4FG-Go",
             authDomain: "k-digital-studio-64d0f.firebaseapp.com",
             projectId: "k-digital-studio-64d0f",
-            storageBucket: "k-digital-studio-64d0f.appspot.com",
+            storageBucket: "k-digital-studio-64d0f.appId.com",
             messagingSenderId: "986818037155",
             appId: "1:986818037155:web:c41803fe1f9214477c0616",
             measurementId: "G-ZJ43QR9W71"
@@ -934,6 +1274,8 @@
             try {
                 const snapshot = await db.collection('products').get();
                 allAssets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                // Initial sort: alphabetical by title
+                allAssets.sort((a, b) => a.title.localeCompare(b.title));
                 filteredAssets = [...allAssets];
             } catch (error) {
                 console.error("Error fetching assets:", error);
@@ -980,9 +1322,14 @@
         function setupStaticEventListeners() {
             menuBtn.addEventListener('click', () => mobileMenuItems.classList.toggle('active'));
 
-            document.querySelector('.logo').addEventListener('click', () => renderView('index'));
+            // Ensure the logo always redirects to the index page
+            document.querySelector('.logo').addEventListener('click', () => {
+                currentPage = 1; // Reset current page to 1
+                renderView('index');
+            });
             
             // Setup navigation links
+            ['desktop-about-link', 'mobile-about-link'].forEach(id => document.getElementById(id).addEventListener('click', () => renderView('about')));
             ['desktop-contact-link', 'mobile-contact-link'].forEach(id => document.getElementById(id).addEventListener('click', () => renderView('contact')));
             ['desktop-faq-link', 'mobile-faq-link'].forEach(id => document.getElementById(id).addEventListener('click', () => renderView('faq')));
             ['desktop-blog-link', 'mobile-blog-link'].forEach(id => document.getElementById(id).addEventListener('click', () => renderView('blog')));
@@ -1024,6 +1371,9 @@
             }
 
             switch(view) {
+                case 'about':
+                    renderAboutPage();
+                    break;
                 case 'contact':
                     renderContactPage();
                     break;
@@ -1078,6 +1428,15 @@
                         <input type="text" id="search-input" placeholder="Search for assets, courses...">
                         <button id="search-btn"><i class="fas fa-search"></i></button>
                     </div>
+                    <div class="sort-container">
+                        <label for="sort-dropdown">Sort by:</label>
+                        <select id="sort-dropdown" class="sort-dropdown">
+                            <option value="alphabetical-asc">Alphabetical (A-Z)</option>
+                            <option value="alphabetical-desc">Alphabetical (Z-A)</option>
+                            <option value="downloads-desc">Downloads (High to Low)</option>
+                            <option value="downloads-asc">Downloads (Low to High)</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="hero-tagline">Premium Digital Assets & Courses</div>
                 <div class="assets-container">
@@ -1090,9 +1449,40 @@
             document.getElementById('search-input').addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') handleSearch();
             });
+            document.getElementById('sort-dropdown').addEventListener('change', handleSort);
+
+            // Ensure the dropdown reflects the current sorting if it was set programmatically
+            // (e.g., if a default sort order is applied on initial load)
+            // For now, it defaults to A-Z as per fetchAssets.
             
             renderAssets();
             renderPagination();
+        }
+
+        function renderAboutPage() {
+            contentArea.innerHTML = `
+                <div class="page-content-container">
+                    <h1 class="page-title">About 5K Digital Studio</h1>
+                    <div class="page-content">
+                        <p>Welcome to <strong>5K Digital Studio</strong>, your premier destination for high-quality digital assets and comprehensive creative courses. We are passionate about empowering creators, designers, and enthusiasts with the tools and knowledge they need to bring their visions to life.</p>
+                        
+                        <h3>Our Mission</h3>
+                        <p>Our mission is to democratize creativity by providing accessible, top-tier digital resources. We believe that everyone, regardless of their skill level, should have access to the best assets and education to excel in their creative endeavors. We strive to be a catalyst for innovation and artistic expression.</p>
+                        
+                        <h3>What We Offer</h3>
+                        <ul>
+                            <li><strong>Premium Digital Assets:</strong> Explore our extensive library of meticulously crafted digital assets, including graphics, templates, sound effects, video elements, and more. Each asset is designed to save you time and elevate your projects.</li>
+                            <li><strong>Comprehensive Courses:</strong> Dive deep into various creative disciplines with our expert-led courses. Whether you're a beginner looking to learn the basics or a seasoned professional aiming to refine your skills, our courses cover everything from graphic design and video editing to 3D modeling and digital art.</li>
+                            <li><strong>Community and Support:</strong> Join a thriving community of fellow creators. We offer dedicated support to ensure you get the most out of our resources and overcome any creative challenges you face.</li>
+                        </ul>
+                        
+                        <h3>Our Vision</h3>
+                        <p>We envision a world where creativity knows no bounds, and every idea can be transformed into a masterpiece. 5K Digital Studio is committed to continuously expanding our offerings, embracing new technologies, and fostering a supportive environment for global creative talent.</p>
+
+                        <p>Thank you for choosing 5K Digital Studio. We're excited to be part of your creative journey!</p>
+                    </div>
+                </div>
+            `;
         }
         
         function renderContactPage() {
@@ -1128,11 +1518,13 @@
                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
                     console.log('Message sent successfully!');
-                    alert('Thank you for your message! We will get back to you soon.'); // Use alert for user feedback
+                    // Replaced alert with a simple console log for Canvas environment
+                    console.log('Thank you for your message! We will get back to you soon.'); 
                     e.target.reset();
                 } catch (error) {
                     console.error("Error sending message:", error);
-                    alert("Error sending message. Please try again later."); // Use alert for user feedback
+                    // Replaced alert with a simple console log for Canvas environment
+                    console.log("Error sending message. Please try again later."); 
                 }
             });
         }
@@ -1228,7 +1620,7 @@
             const assetsToShow = filteredAssets.slice((currentPage - 1) * assetsPerPage, currentPage * assetsPerPage);
             
             if (assetsToShow.length === 0) {
-                assetsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No assets found.</p>';
+                assetsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #7f8c8d; padding: 2rem 0;">No assets found.</p>';
                 return;
             }
             
@@ -1304,8 +1696,40 @@
             );
             
             currentPage = 1;
+            // Re-apply current sort order after filtering
+            const currentSortValue = document.getElementById('sort-dropdown')?.value || 'alphabetical-asc';
+            sortAssets(currentSortValue); // Sort after filtering
             renderAssets();
             renderPagination();
+        }
+
+        function handleSort() {
+            const sortValue = document.getElementById('sort-dropdown').value;
+            sortAssets(sortValue);
+            currentPage = 1; // Reset to first page on sort
+            renderAssets();
+            renderPagination();
+        }
+
+        function sortAssets(sortValue) {
+            switch (sortValue) {
+                case 'alphabetical-asc':
+                    filteredAssets.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case 'alphabetical-desc':
+                    filteredAssets.sort((a, b) => b.title.localeCompare(a.title));
+                    break;
+                case 'downloads-desc':
+                    filteredAssets.sort((a, b) => (b.downloads || 0) - (a.downloads || 0));
+                    break;
+                case 'downloads-asc':
+                    filteredAssets.sort((a, b) => (a.downloads || 0) - (b.downloads || 0));
+                    break;
+                default:
+                    // Default to alphabetical-asc if an unknown value is passed
+                    filteredAssets.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+            }
         }
         
         function downloadAsset(assetId) {
