@@ -901,6 +901,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             z-index: 999;
             transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none; /* Removed the small dash/underline */
         }
 
         #whatsapp-sticky-btn:hover {
@@ -954,7 +955,7 @@
                 padding: 2rem 1rem;
             }
             .assets-grid {
-                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             }
             .asset-image {
                 height: 180px;
@@ -1074,7 +1075,7 @@
 
     <header>
         <div class="header-left">
-            <div class="logo">5K Graphic Studio</div>
+            <div class="logo">5K Digital Studio</div>
             </div>
         
         <div class="header-right">
@@ -1154,7 +1155,7 @@
         
         let filteredAssets = [];
         let currentPage = 1;
-        const assetsPerPage = 8;
+        const assetsPerPage = 20; // Changed from 8 to 20
         let currentModalAssetId = null;
         let userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone; // Default to browser's timezone
         
