@@ -876,7 +876,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
+            /* Removed text-align: center from here to allow child p to justify */
         }
 
         .asset-detail-page-image {
@@ -893,20 +893,25 @@
             color: #2980b9;
             margin-bottom: 1rem;
             font-weight: 800;
+            text-align: center; /* Keep h1 centered */
+            width: 100%; /* Ensure h1 takes full width to center effectively */
         }
 
         .asset-detail-page .meta-info {
             font-size: 1rem;
             color: #7f8c8d;
             margin-bottom: 2rem;
+            text-align: center; /* Keep meta info centered */
+            width: 100%; /* Ensure meta info takes full width to center effectively */
         }
 
         .asset-detail-page p {
             font-size: 1.1rem;
             line-height: 1.8;
             color: #5d6d7e;
-            text-align: left;
+            text-align: justify; /* Explicitly set to justify */
             margin-bottom: 2rem;
+            width: 100%; /* Ensure paragraph takes full available width */
         }
 
         .asset-detail-page .download-now-btn {
@@ -927,6 +932,17 @@
             transform: translateY(-2px);
         }
 
+        /* Animation for button click */
+        @keyframes buttonPress {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.98); }
+            100% { transform: scale(1); }
+        }
+
+        .download-btn.button-pressed,
+        .download-now-btn.button-pressed {
+            animation: buttonPress 0.2s ease-out;
+        }
 
         /* Digital Watch Styles */
         #digital-watch {
@@ -1299,7 +1315,7 @@
             // Check for saved dark mode preference
             if (localStorage.getItem('darkMode') === 'enabled') {
                 document.body.classList.add('dark-mode');
-                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                darkModeToggle.innerHTML = '<i class="fas fa-sun></i>';
             }
 
             // Fetch all data from Firebase and user timezone concurrently
@@ -1753,8 +1769,14 @@
                 </div>
             `;
 
-            document.querySelector('.download-now-btn').addEventListener('click', function() {
-                downloadAsset(this.getAttribute('data-id'));
+            const downloadNowBtn = document.querySelector('.download-now-btn');
+            downloadNowBtn.addEventListener('click', function() {
+                const button = this;
+                button.classList.add('button-pressed');
+                setTimeout(() => {
+                    button.classList.remove('button-pressed');
+                    downloadAsset(button.getAttribute('data-id'));
+                }, 200); // Match animation duration
             });
         }
         
@@ -1795,10 +1817,27 @@
                 `;
                 assetsGrid.appendChild(assetCard);
 
-                // Add click event to show asset detail page when clicking anywhere on the card OR the "More Info" button
+                // Add click event to show asset detail page when clicking anywhere on the card
                 assetCard.addEventListener('click', (e) => {
+                    // If the click target is the button itself, let the button's specific listener handle it
+                    if (e.target.classList.contains('download-btn')) {
+                        return; 
+                    }
                     const assetId = asset.id;
                     renderView(`asset-detail/${assetId}`);
+                });
+
+                // Get the specific "More Info" button for this card and add animation/navigation
+                const moreInfoBtn = assetCard.querySelector('.download-btn');
+                moreInfoBtn.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent the card's click listener from firing
+                    const button = this;
+                    button.classList.add('button-pressed');
+                    setTimeout(() => {
+                        button.classList.remove('button-pressed');
+                        const assetId = button.getAttribute('data-id');
+                        renderView(`asset-detail/${assetId}`); // Navigate after animation
+                    }, 200); // Match animation duration
                 });
             });
         }
