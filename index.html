@@ -393,10 +393,10 @@
         .sort-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 10px; /* Gap between the two groups */
             margin-top: 1.5rem;
-            justify-content: flex-end; /* Align to the right */
-            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+            justify-content: space-around; /* Distribute space between them */
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens if needed */
         }
 
         .sort-container label {
@@ -430,20 +430,50 @@
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
 
+        /* New styles for sort/filter groups */
+        .sort-filter-group {
+            display: flex; /* Make the group itself a flex container */
+            align-items: center; /* Vertically align label and select */
+            gap: 5px; /* Space between label and select within the group */
+            flex-grow: 1; /* Allow the groups to grow and take available space */
+            min-width: 140px; /* Prevent them from becoming too narrow */
+            max-width: 48%; /* Limit max width to allow two columns */
+        }
+
+        /* Adjust dropdown width within the group */
+        .sort-filter-group .sort-dropdown {
+            flex-grow: 1; /* Allow the select to take up remaining space */
+            min-width: 80px; /* Ensure dropdown doesn't become too small */
+        }
+
         .hero-tagline {
             text-align: center;
             font-size: 1.6rem;
             color: #555;
-            margin: 1.5rem auto 3rem auto;
+            margin: 1.5rem auto 3rem auto; /* Adjusted margin */
             padding: 0 1.5rem;
             max-width: 900px;
             font-weight: 500;
             line-height: 1.4;
             letter-spacing: -0.2px;
+            font-weight: bold; /* Make it bold */
+            animation: pulseColor 4s infinite alternate; /* Apply animation */
         }
 
         body.dark-mode .hero-tagline {
             color: #b0b9c5;
+        }
+
+        /* Keyframe animation for the hero tagline */
+        @keyframes pulseColor {
+            0% { color: #555; }
+            50% { color: #3498db; } /* Blue pulse */
+            100% { color: #555; }
+        }
+        body.dark-mode @keyframes pulseColor {
+            0% { color: #b0b9c5; }
+            50% { color: #4CAF50; } /* Green pulse for dark mode */
+            100% { color: #b0b9c5; }
         }
         
         /* Assets Grid */
@@ -1479,27 +1509,31 @@
         
         function renderIndexPage() {
             contentArea.innerHTML = `
+                <div class="hero-tagline">Premium Digital assets, courses and templates with MRR and PLR rights</div>
                 <div class="search-container">
                     <div class="search-bar">
                         <input type="text" id="search-input" placeholder="Search for assets, courses...">
                         <button id="search-btn"><i class="fas fa-search"></i></button>
                     </div>
                     <div class="sort-container">
-                        <label for="sort-dropdown">Sort by:</label>
-                        <select id="sort-dropdown" class="sort-dropdown">
-                            <option value="alphabetical-asc">Alphabetical (A-Z)</option>
-                            <option value="alphabetical-desc">Alphabetical (Z-A)</option>
-                            <option value="downloads-desc">Downloads (High to Low)</option>
-                            <option value="downloads-asc">Downloads (Low to High)</option>
-                        </select>
-                        <label for="type-filter-dropdown">Filter by Type:</label>
-                        <select id="type-filter-dropdown" class="sort-dropdown">
-                            <option value="all">All Types</option>
-                            <!-- Options will be dynamically populated by populateTypeFilterDropdown() -->
-                        </select>
+                        <div class="sort-filter-group">
+                            <label for="sort-dropdown">Sort by:</label>
+                            <select id="sort-dropdown" class="sort-dropdown">
+                                <option value="alphabetical-asc">Alphabetical (A-Z)</option>
+                                <option value="alphabetical-desc">Alphabetical (Z-A)</option>
+                                <option value="downloads-desc">Downloads (High to Low)</option>
+                                <option value="downloads-asc">Downloads (Low to High)</option>
+                            </select>
+                        </div>
+                        <div class="sort-filter-group">
+                            <label for="type-filter-dropdown">Filter by Type:</label>
+                            <select id="type-filter-dropdown" class="sort-dropdown">
+                                <option value="all">All Types</option>
+                                <!-- Options will be dynamically populated by populateTypeFilterDropdown() -->
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="hero-tagline">Premium Digital Assets & Courses</div>
                 <div class="assets-container">
                     <div class="assets-grid" id="assets-grid"></div>
                     <div class="pagination" id="pagination"></div>
