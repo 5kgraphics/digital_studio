@@ -450,7 +450,7 @@
             text-align: center;
             font-size: 1.6rem;
             color: #555;
-            margin: 1.5rem auto 3rem auto; /* Adjusted margin */
+            margin: 1.5rem auto 1.5rem auto; /* Adjusted margin-bottom to create space */
             padding: 0 1.5rem;
             max-width: 900px;
             font-weight: 500;
@@ -1117,7 +1117,7 @@
             .page-btn { margin: 0.2rem; padding: 0.5rem 0.9rem;}
             .page-title { font-size: 1.8rem; }
             .logo { font-size: 1.4rem; }
-            .hero-tagline { font-size: 1.1rem; margin-bottom: 2rem;}
+            .hero-tagline { font-size: 1.1rem; margin-bottom: 1.5rem;} /* Adjusted margin-bottom */
             .asset-details { padding: 1.2rem; }
             .asset-title { font-size: 1.2rem; }
             .asset-description { font-size: 0.9rem; }
@@ -1148,6 +1148,30 @@
                 font-size: 1.8rem;
                 bottom: 65px;
                 right: 12px;
+            }
+
+            /* Specific adjustments for sort/filter on small screens */
+            .sort-container {
+                flex-direction: row; /* Keep them in a row */
+                justify-content: space-between; /* Distribute space between them */
+                gap: 5px; /* Smaller gap between the two main groups */
+                margin-top: 1rem; /* Slightly reduced margin top */
+            }
+
+            .sort-filter-group {
+                flex-basis: 48%; /* Adjust basis to allow two items per row */
+                max-width: 48%; /* Ensure they don't grow too much */
+                flex-shrink: 1; /* Allow shrinking */
+                gap: 3px; /* Smaller gap between label and dropdown */
+            }
+
+            .sort-container label {
+                font-size: 0.8rem; /* Smaller font size for labels */
+            }
+
+            .sort-dropdown {
+                padding: 0.5rem 0.7rem; /* Smaller padding */
+                font-size: 0.8rem; /* Smaller font size for dropdowns */
             }
         }
     </style>
@@ -1308,7 +1332,7 @@
         darkModeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             if (document.body.classList.contains('dark-mode')) {
-                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                darkModeToggle.innerHTML = '<i class="fas fa-sun></i>';
                 localStorage.setItem('darkMode', 'enabled');
             } else {
                 darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
@@ -1317,6 +1341,10 @@
         });
 
         // Blog Post Modal functionality
+        modalBlogPostClose.addEventListener('click', () => {
+            blogPostModal.classList.remove('active');
+        });
+
         modalBlogPostClose.addEventListener('click', () => {
             blogPostModal.classList.remove('active');
         });
