@@ -247,8 +247,18 @@
             margin-bottom: 0.2rem;
             cursor: pointer;
             letter-spacing: -0.5px;
+            animation: logoColorChange 5s infinite alternate; /* Apply animation */
         }
         
+        /* Keyframe animation for the logo color change */
+        @keyframes logoColorChange {
+            0% { color: white; }
+            25% { color: #ffe082; } /* Light orange/yellow */
+            50% { color: #81c784; } /* Light green */
+            75% { color: #64b5f6; } /* Light blue */
+            100% { color: white; }
+        }
+
         /* Menu Styles */
         .header-right {
             display: flex;
@@ -1133,7 +1143,10 @@
             .page-btn { margin: 0.2rem; padding: 0.5rem 0.9rem;}
             .page-title { font-size: 1.8rem; }
             .logo { font-size: 1.4rem; }
-            .hero-tagline { font-size: 1.1rem; margin-bottom: 1.5rem;} /* Adjusted margin-bottom */
+            .hero-tagline { 
+                font-size: 1.25rem; /* Increased font size for mobile */
+                margin-bottom: 1.5rem;
+            } 
             .asset-details { padding: 1.2rem; }
             .asset-title { font-size: 1.2rem; }
             .asset-description { font-size: 0.9rem; }
