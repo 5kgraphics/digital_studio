@@ -32,7 +32,8 @@
         body.dark-mode .asset-card,
         body.dark-mode .page-content,
         body.dark-mode .search-bar,
-        body.dark-mode .modal-content {
+        body.dark-mode .modal-content,
+        body.dark-mode .asset-detail-page { /* Added for new asset detail page */
             background-color: #2d3748; /* Darker charcoal for elements */
             color: #e2e8f0;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -42,7 +43,8 @@
         body.dark-mode .asset-meta,
         body.dark-mode .page-content p,
         body.dark-mode .faq-answer,
-        body.dark-mode .blog-excerpt {
+        body.dark-mode .blog-excerpt,
+        body.dark-mode .asset-detail-page p { /* Added for new asset detail page */
             color: #a0aec0; /* Muted gray for secondary text */
         }
 
@@ -56,7 +58,9 @@
         body.dark-mode .asset-title,
         body.dark-mode .faq-question,
         body.dark-mode .blog-title,
-        body.dark-mode .modal-title {
+        body.dark-mode .modal-title,
+        body.dark-mode .asset-detail-page h1, /* Added for new asset detail page */
+        body.dark-mode .asset-detail-page h2 { /* Added for new asset detail page */
             color: #4CAF50; /* Vibrant green accent for dark mode titles */
         }
 
@@ -119,7 +123,7 @@
         }
 
 
-        /* Popup Modal Styles */
+        /* Popup Modal Styles (kept for blog post modal) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -392,6 +396,7 @@
             gap: 10px;
             margin-top: 1.5rem;
             justify-content: flex-end; /* Align to the right */
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
         }
 
         .sort-container label {
@@ -830,6 +835,69 @@
             text-decoration: underline;
         }
 
+        /* Asset Detail Page Styles */
+        .asset-detail-page {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 2.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .asset-detail-page-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .asset-detail-page h1 {
+            font-size: 2.8rem;
+            color: #2980b9;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .asset-detail-page .meta-info {
+            font-size: 1rem;
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+        }
+
+        .asset-detail-page p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #5d6d7e;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .asset-detail-page .download-now-btn {
+            background: #27ae60; /* Green for download */
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.1s ease;
+            margin-top: 1.5rem;
+        }
+
+        .asset-detail-page .download-now-btn:hover {
+            background: #229a55;
+            transform: translateY(-2px);
+        }
+
+
         /* Digital Watch Styles */
         #digital-watch {
             position: fixed;
@@ -920,6 +988,20 @@
             }
             .page-title {
                 font-size: 2.2rem;
+            }
+            .asset-detail-page { /* Responsive for asset detail page */
+                margin: 2rem auto;
+                padding: 2rem;
+            }
+            .asset-detail-page h1 {
+                font-size: 2.2rem;
+            }
+            .asset-detail-page p {
+                font-size: 1rem;
+            }
+            .asset-detail-page .download-now-btn {
+                padding: 0.8rem 2rem;
+                font-size: 1.1rem;
             }
         }
 
@@ -1043,22 +1125,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="modal-overlay" id="assetModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalAssetTitle">Asset Title</h3>
-                <button class="modal-close" id="modalClose">&times;</button>
-            </div>
-            <div class="modal-body">
-                <img src="" alt="Asset Image" class="modal-image" id="modalAssetImage">
-                <div class="modal-description" id="modalAssetDescription">Asset description will appear here.</div>
-            </div>
-            <div class="modal-footer">
-                <button class="download-btn" id="modalDownloadBtn">Download</button>
-            </div>
-        </div>
-    </div>
-
+    <!-- Blog Post Modal (kept as it's still useful for blog posts) -->
     <div class="modal-overlay" id="blogPostModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1111,9 +1178,9 @@
         <div class="footer-content">
             <p>5K Digital Studio provides high-quality digital assets and courses for creators.</p>
             <div class="social-icons">
-                <a href="https://www.instagram.com/5kdigitalstudio" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@5kdigitalstudio" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a href="https://t.me/5kdigitalstudio" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+                <a href="https://www.instagram.com/5k_graphic_studio?igsh=ZHoya3czMjIyNG1w" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@nooralkali?_t=ZM-8yKNy31M3ya&_r=1" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://t.me/nooralkalii" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
             </div>
             <p class="copyright">&copy; 2025 5K Digital Studio. All rights reserved.</p>
         </div>
@@ -1155,21 +1222,16 @@
         
         let filteredAssets = [];
         let currentPage = 1;
-        const assetsPerPage = 20; // Changed from 8 to 20
-        let currentModalAssetId = null;
+        const assetsPerPage = 20;
         let userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone; // Default to browser's timezone
+        let currentSortValue = 'alphabetical-asc'; // Track current sort value
+        let currentTypeFilter = 'all'; // Track current type filter value
         
         // --- DOM Elements ---
         const contentArea = document.getElementById('content-area');
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenuItems = document.getElementById('mobile-menu-items');
         const darkModeToggle = document.getElementById('darkModeToggle');
-        const assetModal = document.getElementById('assetModal');
-        const modalClose = document.getElementById('modalClose');
-        const modalAssetTitle = document.getElementById('modalAssetTitle');
-        const modalAssetImage = document.getElementById('modalAssetImage');
-        const modalAssetDescription = document.getElementById('modalAssetDescription');
-        const modalDownloadBtn = document.getElementById('modalDownloadBtn');
         const digitalWatch = document.getElementById('digital-watch');
         // New DOM Elements for Blog Post Modal
         const blogPostModal = document.getElementById('blogPostModal');
@@ -1199,8 +1261,13 @@
             setupScrollToTop(); // Setup scroll-to-top functionality
 
             // Initial render based on URL hash or default to index
-            const view = window.location.hash.substring(1) || 'index';
-            renderView(view);
+            const view = window.location.hash.substring(1);
+            if (view.startsWith('asset-')) {
+                const assetId = view.substring(6); // 'asset-'.length is 6
+                renderView(`asset-detail/${assetId}`);
+            } else {
+                renderView(view || 'index');
+            }
 
             // Start digital watch
             updateDigitalWatch();
@@ -1218,40 +1285,6 @@
                 localStorage.setItem('darkMode', 'disabled');
             }
         });
-
-        // Asset Modal functionality
-        modalClose.addEventListener('click', () => {
-            assetModal.classList.remove('active');
-        });
-
-        modalDownloadBtn.addEventListener('click', () => {
-            if (currentModalAssetId) {
-                downloadAsset(currentModalAssetId);
-                assetModal.classList.remove('active');
-            }
-        });
-
-        assetModal.addEventListener('click', (e) => {
-            if (e.target === assetModal) {
-                assetModal.classList.remove('active');
-            }
-        });
-
-        function showAssetModal(asset) {
-            currentModalAssetId = asset.id;
-            modalAssetTitle.textContent = asset.title;
-            // Changed from textContent to innerHTML to render rich text
-            modalAssetDescription.innerHTML = asset.description; 
-            
-            if (asset.image) {
-                modalAssetImage.src = asset.image;
-                modalAssetImage.style.display = 'block';
-            } else {
-                modalAssetImage.style.display = 'none';
-            }
-            
-            assetModal.classList.add('active');
-        }
 
         // Blog Post Modal functionality
         modalBlogPostClose.addEventListener('click', () => {
@@ -1339,8 +1372,13 @@
 
             // Handle browser back/forward buttons
             window.addEventListener('popstate', () => {
-                const view = window.location.hash.substring(1) || 'index';
-                renderView(view, false); // Don't push history state again
+                const view = window.location.hash.substring(1);
+                if (view.startsWith('asset-detail/')) {
+                    const assetId = view.substring('asset-detail/'.length);
+                    renderView(`asset-detail/${assetId}`, false);
+                } else {
+                    renderView(view || 'index', false); // Don't push history state again
+                }
             });
         }
         
@@ -1366,6 +1404,23 @@
                 mobileMenuItems.classList.remove('active');
             }
             
+            // Handle asset detail page specifically
+            if (view.startsWith('asset-detail/')) {
+                const assetId = view.substring('asset-detail/'.length);
+                const asset = allAssets.find(a => a.id === assetId);
+                if (asset) {
+                    if (pushState) {
+                        window.history.pushState({view: `asset-detail/${assetId}`}, '', `#asset-detail/${assetId}`);
+                    }
+                    renderAssetDetailPage(asset);
+                } else {
+                    // If asset not found, redirect to index or show error
+                    renderIndexPage();
+                    console.error("Asset not found for ID:", assetId);
+                }
+                return; // Exit function after handling asset detail
+            }
+
             if (pushState) {
                 const path = view === 'index' ? window.location.pathname : `#${view}`;
                 window.history.pushState({view}, '', path);
@@ -1437,6 +1492,11 @@
                             <option value="downloads-desc">Downloads (High to Low)</option>
                             <option value="downloads-asc">Downloads (Low to High)</option>
                         </select>
+                        <label for="type-filter-dropdown">Filter by Type:</label>
+                        <select id="type-filter-dropdown" class="sort-dropdown">
+                            <option value="all">All Types</option>
+                            <!-- Options will be dynamically populated by populateTypeFilterDropdown() -->
+                        </select>
                     </div>
                 </div>
                 <div class="hero-tagline">Premium Digital Assets & Courses</div>
@@ -1446,18 +1506,24 @@
                 </div>
             `;
             
-            document.getElementById('search-btn').addEventListener('click', handleSearch);
+            document.getElementById('search-btn').addEventListener('click', applyFiltersAndSort);
             document.getElementById('search-input').addEventListener('keyup', (e) => {
-                if (e.key === 'Enter') handleSearch();
+                if (e.key === 'Enter') applyFiltersAndSort();
             });
-            document.getElementById('sort-dropdown').addEventListener('change', handleSort);
+            document.getElementById('sort-dropdown').addEventListener('change', (e) => {
+                currentSortValue = e.target.value;
+                applyFiltersAndSort();
+            });
+            document.getElementById('type-filter-dropdown').addEventListener('change', (e) => {
+                currentTypeFilter = e.target.value;
+                applyFiltersAndSort();
+            });
 
-            // Ensure the dropdown reflects the current sorting if it was set programmatically
-            // (e.g., if a default sort order is applied on initial load)
-            // For now, it defaults to A-Z as per fetchAssets.
+            // Populate the type filter dropdown after the element is in the DOM
+            populateTypeFilterDropdown();
             
-            renderAssets();
-            renderPagination();
+            // Apply initial filters and sort
+            applyFiltersAndSort();
         }
 
         function renderAboutPage() {
@@ -1589,10 +1655,10 @@
                         <p>On the homepage, you can browse through various categories of digital assets or use the search bar to find a specific asset or course.</p>
                         
                         <h3>Step 2: Select Your Desired Asset</h3>
-                        <p>Once you find an asset you're interested in, click on its card to view more details. A modal window will pop up showing the asset's title, a larger image (if available), and a detailed description.</p>
+                        <p>Once you find an asset you're interested in, click on its card or the "More Info" button to view more details on a dedicated page.</p>
                         
-                        <h3>Step 3: Click the Download Button</h3>
-                        <p>Inside the asset's detail modal, you will see a "Download" button. Click this button to initiate the download. If a direct download link is available, your browser will typically start the download automatically.</p>
+                        <h3>Step 3: Click the "Download Now" Button</h3>
+                        <p>On the asset's detail page, you will see a prominent "Download Now" button. Click this button to initiate the download. If a direct download link is available, your browser will typically start the download automatically.</p>
                         
                         <h3>Step 4: Complete a Quick Verification</h3>
                         <p>To ensure the security and integrity of our digital assets, and to prevent automated downloads, we require a quick verification. This helps us maintain a high-quality service for all users. Please complete the short verification step that appears.</p>
@@ -1610,6 +1676,24 @@
                     </div>
                 </div>
             `;
+        }
+
+        function renderAssetDetailPage(asset) {
+            contentArea.innerHTML = `
+                <div class="asset-detail-page-container page-content-container">
+                    <div class="asset-detail-page">
+                        <img src="${asset.image || 'https://placehold.co/800x400/cccccc/333333?text=No+Image'}" alt="${asset.title}" class="asset-detail-page-image">
+                        <h1>${asset.title}</h1>
+                        <div class="meta-info">${(asset.downloads || 0).toLocaleString()} downloads</div>
+                        <p>${asset.description}</p>
+                        <button class="download-now-btn" data-id="${asset.id}">Download Now</button>
+                    </div>
+                </div>
+            `;
+
+            document.querySelector('.download-now-btn').addEventListener('click', function() {
+                downloadAsset(this.getAttribute('data-id'));
+            });
         }
         
         // --- ASSET RENDERING & PAGINATION ---
@@ -1643,25 +1727,16 @@
                         <p class="asset-description">${truncatedDescription}</p>
                         <div class="asset-meta">
                             <span>${(asset.downloads || 0).toLocaleString()} downloads</span>
-                            <button class="download-btn" data-id="${asset.id}">Download</button>
+                            <button class="download-btn" data-id="${asset.id}">More Info</button>
                         </div>
                     </div>
                 `;
                 assetsGrid.appendChild(assetCard);
 
-                // Add click event to show modal when clicking anywhere on the card
+                // Add click event to show asset detail page when clicking anywhere on the card OR the "More Info" button
                 assetCard.addEventListener('click', (e) => {
-                    // Don't trigger if clicking on the download button
-                    if (!e.target.classList.contains('download-btn')) {
-                        showAssetModal(asset);
-                    }
-                });
-            });
-            
-            document.querySelectorAll('.download-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation(); // Prevent the card click event from firing
-                    downloadAsset(this.getAttribute('data-id'));
+                    const assetId = asset.id;
+                    renderView(`asset-detail/${assetId}`);
                 });
             });
         }
@@ -1687,50 +1762,80 @@
             }
         }
         
-        function handleSearch() {
+        function populateTypeFilterDropdown() {
+            const typeFilterDropdown = document.getElementById('type-filter-dropdown');
+            if (!typeFilterDropdown) return; // Exit if element not found
+
+            // Clear existing options except "All Types"
+            typeFilterDropdown.innerHTML = '<option value="all">All Types</option>';
+
+            const uniqueTypes = new Set();
+            allAssets.forEach(asset => {
+                if (asset.type) {
+                    uniqueTypes.add(asset.type);
+                }
+            });
+
+            Array.from(uniqueTypes).sort().forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type;
+                typeFilterDropdown.appendChild(option);
+            });
+
+            // Set the dropdown to the currently selected filter
+            typeFilterDropdown.value = currentTypeFilter;
+        }
+
+        function applyFiltersAndSort() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
-            
-            filteredAssets = allAssets.filter(asset => 
-                asset.title.toLowerCase().includes(searchTerm) || 
-                asset.description.toLowerCase().includes(searchTerm) ||
-                asset.type.toLowerCase().includes(searchTerm)
-            );
-            
-            currentPage = 1;
-            // Re-apply current sort order after filtering
-            const currentSortValue = document.getElementById('sort-dropdown')?.value || 'alphabetical-asc';
-            sortAssets(currentSortValue); // Sort after filtering
-            renderAssets();
-            renderPagination();
-        }
-
-        function handleSort() {
             const sortValue = document.getElementById('sort-dropdown').value;
-            sortAssets(sortValue);
-            currentPage = 1; // Reset to first page on sort
-            renderAssets();
-            renderPagination();
-        }
+            const typeFilterValue = document.getElementById('type-filter-dropdown').value;
 
-        function sortAssets(sortValue) {
+            let tempAssets = [...allAssets];
+
+            // 1. Apply Search Filter
+            if (searchTerm) {
+                tempAssets = tempAssets.filter(asset => 
+                    asset.title.toLowerCase().includes(searchTerm) || 
+                    asset.description.toLowerCase().includes(searchTerm) ||
+                    (asset.type && asset.type.toLowerCase().includes(searchTerm))
+                );
+            }
+
+            // 2. Apply Type Filter
+            if (typeFilterValue !== 'all') {
+                tempAssets = tempAssets.filter(asset => asset.type && asset.type.toLowerCase() === typeFilterValue.toLowerCase());
+            }
+
+            // 3. Apply Sort
             switch (sortValue) {
                 case 'alphabetical-asc':
-                    filteredAssets.sort((a, b) => a.title.localeCompare(b.title));
+                    tempAssets.sort((a, b) => a.title.localeCompare(b.title));
                     break;
                 case 'alphabetical-desc':
-                    filteredAssets.sort((a, b) => b.title.localeCompare(a.title));
+                    tempAssets.sort((a, b) => b.title.localeCompare(a.title));
                     break;
                 case 'downloads-desc':
-                    filteredAssets.sort((a, b) => (b.downloads || 0) - (a.downloads || 0));
+                    tempAssets.sort((a, b) => (b.downloads || 0) - (a.downloads || 0));
                     break;
                 case 'downloads-asc':
-                    filteredAssets.sort((a, b) => (a.downloads || 0) - (b.downloads || 0));
+                    tempAssets.sort((a, b) => (a.downloads || 0) - (b.downloads || 0));
                     break;
                 default:
                     // Default to alphabetical-asc if an unknown value is passed
-                    filteredAssets.sort((a, b) => a.title.localeCompare(b.title));
+                    tempAssets.sort((a, b) => a.title.localeCompare(b.title));
                     break;
             }
+            
+            filteredAssets = tempAssets;
+            currentPage = 1; // Reset to first page on any filter/sort change
+            renderAssets();
+            renderPagination();
+
+            // Update global state variables
+            currentSortValue = sortValue;
+            currentTypeFilter = typeFilterValue;
         }
         
         function downloadAsset(assetId) {
