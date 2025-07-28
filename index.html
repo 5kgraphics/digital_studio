@@ -14,19 +14,42 @@
         }
         
         body {
-            background-color: #f7f9fc; /* Light, clean background */
+            background-color: #f7f9fc; /* Light, clean background fallback */
             color: #2c3e50; /* Dark blue for primary text */
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             transition: background-color 0.4s ease, color 0.4s ease;
+
+            /* Background Image Styles - REMOVED */
+            /* background-image: url('https://placehold.co/1920x1080/3498db/ffffff?text=Digital+Studio+Background'); */
+            /* background-size: cover; */
+            /* background-position: center; */
+            /* background-attachment: fixed; */
+            position: relative; /* Needed for pseudo-element positioning */
+            z-index: 1; /* Ensure body content is above the overlay */
+        }
+
+        /* Overlay for background image transparency effect - REMOVED */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* background-color: rgba(255, 255, 255, 0.1); */ /* 10% opaque white overlay (90% transparent) */
+            z-index: -1; /* Place behind content */
         }
 
         /* Dark Mode Styles */
         body.dark-mode {
-            background-color: #1a202c; /* Dark charcoal */
-            color: #e2e8f0; /* Light gray for dark mode text */
+            background-color: #1a202c; /* Dark charcoal fallback */
+        }
+
+        body.dark-mode::before {
+            /* background-color: rgba(0, 0, 0, 0.1); */ /* 10% opaque black overlay for dark mode */
         }
 
         body.dark-mode .asset-card,
@@ -404,7 +427,7 @@
             display: flex;
             align-items: center;
             gap: 10px; /* Gap between the two groups */
-            margin-top: 1.5rem;
+            margin-bottom: 1.5rem; /* Changed from margin-top to margin-bottom */
             justify-content: space-around; /* Distribute space between them */
             flex-wrap: wrap; /* Allow items to wrap on smaller screens if needed */
         }
@@ -1568,10 +1591,6 @@
             contentArea.innerHTML = `
                 <div class="hero-tagline">Premium Digital assets, courses and templates with MRR and PLR rights</div>
                 <div class="search-container">
-                    <div class="search-bar">
-                        <input type="text" id="search-input" placeholder="Search Digital Products">
-                        <button id="search-btn"><i class="fas fa-search"></i></button>
-                    </div>
                     <div class="sort-container">
                         <div class="sort-filter-group">
                             <label for="sort-dropdown">Sort by:</label>
@@ -1589,6 +1608,10 @@
                                 <!-- Options will be dynamically populated by populateTypeFilterDropdown() -->
                             </select>
                         </div>
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" id="search-input" placeholder="Search Digital Products">
+                        <button id="search-btn"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
                 <div class="assets-container">
@@ -1759,9 +1782,9 @@
                         
                         <h3>Troubleshooting Tips:</h3>
                         <ul>
-                            <li><strong>Download Not Starting:</strong> Ensure your browser's pop-up blocker is not preventing the download.</li>
-                            <li><strong>Slow Download:</strong> Your internet connection speed may affect download times.</li>
-                            <li><strong>Corrupted File:</strong> If the downloaded file is corrupted, try downloading it again. If the problem persists, please contact our support team via the <a href="#contact">Contact Us</a> page.</li>
+                            <li><strong>Download Not Starting:</b> Ensure your browser's pop-up blocker is not preventing the download.</li>
+                            <li><strong>Slow Download:</b> Your internet connection speed may affect download times.</li>
+                            <li><strong>Corrupted File:</b> If the downloaded file is corrupted, try downloading it again. If the problem persists, please contact our support team via the <a href="#contact">Contact Us</a> page.</li>
                         </ul>
                         <p>If you encounter any issues not covered here, feel free to visit our <a href="#faq">FAQ page</a> or <a href="#contact">contact us directly</a>.</p>
                     </div>
