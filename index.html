@@ -21,35 +21,13 @@
             display: flex;
             flex-direction: column;
             transition: background-color 0.4s ease, color 0.4s ease;
-
-            /* Background Image Styles - REMOVED */
-            /* background-image: url('https://placehold.co/1920x1080/3498db/ffffff?text=Digital+Studio+Background'); */
-            /* background-size: cover; */
-            /* background-position: center; */
-            /* background-attachment: fixed; */
             position: relative; /* Needed for pseudo-element positioning */
             z-index: 1; /* Ensure body content is above the overlay */
-        }
-
-        /* Overlay for background image transparency effect - REMOVED */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            /* background-color: rgba(255, 255, 255, 0.1); */ /* 10% opaque white overlay (90% transparent) */
-            z-index: -1; /* Place behind content */
         }
 
         /* Dark Mode Styles */
         body.dark-mode {
             background-color: #1a202c; /* Dark charcoal fallback */
-        }
-
-        body.dark-mode::before {
-            /* background-color: rgba(0, 0, 0, 0.1); */ /* 10% opaque black overlay for dark mode */
         }
 
         body.dark-mode .asset-card,
@@ -145,6 +123,14 @@
             color: #6a7688;
         }
 
+        /* Dark mode toggle button styles */
+        body.dark-mode .dark-mode-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+        }
+        body.dark-mode .dark-mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
 
         /* Popup Modal Styles (kept for blog post modal) */
         .modal-overlay {
@@ -1351,7 +1337,7 @@
             // Check for saved dark mode preference
             if (localStorage.getItem('darkMode') === 'enabled') {
                 document.body.classList.add('dark-mode');
-                darkModeToggle.innerHTML = '<i class="fas fa-sun></i>';
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             }
 
             // Fetch all data from Firebase and user timezone concurrently
@@ -1384,7 +1370,7 @@
         darkModeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             if (document.body.classList.contains('dark-mode')) {
-                darkModeToggle.innerHTML = '<i class="fas fa-sun></i>';
+                darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
                 localStorage.setItem('darkMode', 'enabled');
             } else {
                 darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
