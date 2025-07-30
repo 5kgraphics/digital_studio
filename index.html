@@ -951,6 +951,61 @@
             transform: translateY(-2px);
         }
 
+        /* Blog Post Detail Page Styles */
+        .blog-detail-page {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 2.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .blog-detail-page h1 {
+            font-size: 2.8rem;
+            color: #2980b9;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .blog-detail-meta {
+            font-size: 1rem;
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .blog-detail-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #5d6d7e;
+        }
+
+        .blog-detail-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 2rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-to-blog {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .back-to-blog:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
         /* Animation for button click */
         @keyframes buttonPress {
             0% { transform: scale(1); }
@@ -1058,10 +1113,16 @@
                 margin: 2rem auto;
                 padding: 2rem;
             }
-            .asset-detail-page h1 {
+            .blog-detail-page { /* Responsive for blog detail page */
+                margin: 2rem auto;
+                padding: 2rem;
+            }
+            .asset-detail-page h1,
+            .blog-detail-page h1 {
                 font-size: 2.2rem;
             }
-            .asset-detail-page p {
+            .asset-detail-page p,
+            .blog-detail-content {
                 font-size: 1rem;
             }
             .asset-detail-page .download-now-btn {
@@ -1118,6 +1179,9 @@
             .page-content {
                 padding: 2rem;
             }
+            .blog-detail-page {
+                padding: 2rem;
+            }
             .modal-content {
                 max-width: 95%;
             }
@@ -1161,6 +1225,8 @@
             .asset-description { font-size: 0.9rem; }
             .download-btn { padding: 0.5rem 1rem; font-size: 0.85rem;}
             .page-content { padding: 1.5rem; }
+            .blog-detail-page { padding: 1.5rem; }
+            .blog-detail-page h1 { font-size: 1.8rem; }
             .modal-header { padding: 1rem 1.2rem; }
             .modal-title { font-size: 1.4rem; }
             .modal-close { font-size: 1.6rem; }
@@ -1357,6 +1423,9 @@
             if (view.startsWith('asset-')) {
                 const assetId = view.substring(6); // 'asset-'.length is 6
                 renderView(`asset-detail/${assetId}`);
+            } else if (view.startsWith('blog-post-')) {
+                const postId = view.substring(10); // 'blog-post-'.length is 10
+                renderView(`blog-post/${postId}`);
             } else {
                 renderView(view || 'index');
             }
@@ -1472,6 +1541,9 @@
                 if (view.startsWith('asset-detail/')) {
                     const assetId = view.substring('asset-detail/'.length);
                     renderView(`asset-detail/${assetId}`, false);
+                } else if (view.startsWith('blog-post/')) {
+                    const postId = view.substring('blog-post/'.length);
+                    renderView(`blog-post/${postId}`, false);
                 } else {
                     renderView(view || 'index', false); // Don't push history state again
                 }
@@ -1515,6 +1587,23 @@
                     console.error("Asset not found for ID:", assetId);
                 }
                 return; // Exit function after handling asset detail
+            }
+
+            // Handle blog post page specifically
+            if (view.startsWith('blog-post/')) {
+                const postId = view.substring('blog-post/'.length);
+                const post = blogPosts.find(p => p.id === postId);
+                if (post) {
+                    if (pushState) {
+                        window.history.pushState({view: `blog-post/${postId}`}, '', `#blog-post/${postId}`);
+                    }
+                    renderBlogPostPage(post);
+                } else {
+                    // If post not found, redirect to blog or show error
+                    renderBlogPage();
+                    console.error("Blog post not found for ID:", postId);
+                }
+                return; // Exit function after handling blog post
             }
 
             if (pushState) {
@@ -1736,11 +1825,33 @@
                 element.addEventListener('click', function(e) {
                     e.preventDefault(); // Prevent default link behavior
                     const postId = this.getAttribute('data-id');
-                    const post = blogPosts.find(p => p.id === postId);
-                    if (post) {
-                        showBlogPostModal(post);
-                    }
+                    renderView(`blog-post/${postId}`);
                 });
+            });
+        }
+
+        function renderBlogPostPage(post) {
+            contentArea.innerHTML = `
+                <div class="blog-detail-page">
+                    <h1>${post.title}</h1>
+                    <div class="blog-detail-meta">
+                        Posted on ${new Date(post.date).toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                        })}
+                    </div>
+                    <div class="blog-detail-content">
+                        ${post.content || post.excerpt}
+                    </div>
+                    <a href="#blog" class="back-to-blog"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+                </div>
+            `;
+
+            // Add event listener to back button
+            document.querySelector('.back-to-blog').addEventListener('click', (e) => {
+                e.preventDefault();
+                renderView('blog');
             });
         }
 
