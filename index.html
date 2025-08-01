@@ -236,9 +236,6 @@
             color: white;
             padding: 1rem 2rem;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-            position: sticky;
-            top: 0;
-            z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -368,9 +365,6 @@
             max-width: 850px;
             margin: 2.5rem auto 0;
             padding: 0 1.5rem;
-            position: static;
-            top: 75px; /* Adjusted to be below header */
-            z-index: 90;
             background-color: transparent; /* Overlay effect */
             transition: background-color 0.3s, color 0.3s;
         }
@@ -1019,29 +1013,37 @@
             animation: buttonPress 0.2s ease-out;
         }
 
-        /* Digital Watch Styles */
-        #digital-watch {
+        /* WhatsApp Sticky Icon */
+        #whatsapp-sticky-btn {
             position: fixed;
-            bottom: 25px;
-            left: 25px;
-            background: rgba(44, 62, 80, 0.8); /* Dark blue with transparency */
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            bottom: 25px; /* Aligned with scroll-to-top-btn */
+            right: 25px;
+            background-color: #25D366; /* WhatsApp green */
             color: white;
-            padding: 12px 18px;
-            border-radius: 12px;
-            font-size: 1.6rem;
-            font-weight: bold;
-            text-align: center;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-            z-index: 1000;
-            letter-spacing: 0.5px;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 998; /* Lower z-index than scroll-to-top-btn */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none; /* Removed the small dash/underline */
+        }
+
+        #whatsapp-sticky-btn:hover {
+            background-color: #1DA851; /* Darker green on hover */
+            transform: scale(1.05);
         }
 
         /* Scroll to Top Button Styles */
         #scroll-to-top-btn {
             position: fixed;
-            bottom: 25px;
+            bottom: 90px; /* Adjusted to be above whatsapp-sticky-btn */
             right: 25px;
             background: #3498db; /* Primary blue */
             color: white;
@@ -1058,7 +1060,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, background 0.3s ease, transform 0.2s ease;
-            z-index: 999;
+            z-index: 999; /* Higher z-index than whatsapp-sticky-btn */
         }
 
         #scroll-to-top-btn.show {
@@ -1071,30 +1073,29 @@
             transform: translateY(-3px);
         }
 
-        /* WhatsApp Sticky Icon */
-        #whatsapp-sticky-btn {
+        /* Social Share Button Styles */
+        #social-share-btn {
             position: fixed;
-            bottom: 90px; /* Adjust to be above scroll-to-top-btn */
-            right: 25px;
-            background-color: #25D366; /* WhatsApp green */
+            bottom: 25px;
+            left: 25px;
+            background: #e74c3c; /* Red color, can be customized */
             color: white;
             border: none;
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 2.2rem;
+            width: 55px;
+            height: 55px;
+            font-size: 1.6rem;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            z-index: 999;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            text-decoration: none; /* Removed the small dash/underline */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+            z-index: 1000;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
-        #whatsapp-sticky-btn:hover {
-            background-color: #1DA851; /* Darker green on hover */
+        #social-share-btn:hover {
+            background: #c0392b; /* Darker red on hover */
             transform: scale(1.05);
         }
         
@@ -1146,7 +1147,6 @@
             .search-container {
                 margin-top: 2rem;
                 padding: 0 1rem;
-                top: 70px;
             }
             .search-bar input {
                 padding: 0.9rem 1.2rem;
@@ -1186,25 +1186,26 @@
             .modal-content {
                 max-width: 95%;
             }
-            #digital-watch {
-                font-size: 1.4rem;
-                padding: 10px 15px;
-                bottom: 15px;
-                left: 15px;
+            #whatsapp-sticky-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.8rem;
+                bottom: 25px; /* Adjusted from 18px */
+                right: 18px;
             }
             #scroll-to-top-btn {
                 width: 50px;
                 height: 50px;
                 font-size: 1.4rem;
-                bottom: 18px;
+                bottom: 80px; /* Adjusted from 65px */
                 right: 18px;
             }
-            #whatsapp-sticky-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.8rem;
-                bottom: 65px;
-                right: 12px;
+            #social-share-btn {
+                font-size: 1.4rem;
+                width: 50px;
+                height: 50px;
+                bottom: 25px; /* Adjusted from 18px */
+                left: 18px;
             }
         }
         
@@ -1234,25 +1235,26 @@
             .modal-body { padding: 1.2rem; }
             .modal-image { height: 160px; margin-bottom: 1rem;}
             .modal-footer { padding: 1rem 1.2rem; }
-            #digital-watch {
-                font-size: 1.1rem;
-                padding: 8px 10px;
-                bottom: 10px;
-                left: 10px;
+            #whatsapp-sticky-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.8rem;
+                bottom: 20px; /* Adjusted from 12px */
+                right: 12px;
             }
             #scroll-to-top-btn {
                 width: 40px;
                 height: 40px;
                 font-size: 1.2rem;
-                bottom: 12px;
+                bottom: 70px; /* Adjusted from 65px */
                 right: 12px;
             }
-            #whatsapp-sticky-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.8rem;
-                bottom: 65px;
-                right: 12px;
+            #social-share-btn {
+                font-size: 1.2rem;
+                width: 40px;
+                height: 40px;
+                bottom: 20px; /* Adjusted from 12px */
+                left: 12px;
             }
 
             /* Specific adjustments for sort/filter on small screens */
@@ -1345,7 +1347,9 @@
         </div>
     </footer>
 
-    <div id="digital-watch"></div>
+    <button id="social-share-btn" title="Share on Social Media">
+        <i class="fas fa-share-alt"></i>
+    </button>
     <a href="https://wa.me/2348179977737" target="_blank" id="whatsapp-sticky-btn" title="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -1391,13 +1395,15 @@
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenuItems = document.getElementById('mobile-menu-items');
         const darkModeToggle = document.getElementById('darkModeToggle');
-        const digitalWatch = document.getElementById('digital-watch');
+        // Removed digitalWatch element reference
         // New DOM Elements for Blog Post Modal
         const blogPostModal = document.getElementById('blogPostModal');
         const modalBlogPostClose = document.getElementById('modalBlogPostClose');
         const modalBlogPostTitle = document.getElementById('modalBlogPostTitle');
         const modalBlogPostContent = document.getElementById('modalBlogPostContent');
         const scrollToTopBtn = document.getElementById('scroll-to-top-btn'); // Get the new button
+        const socialShareBtn = document.getElementById('social-share-btn'); // Get the new social share button
+
 
         // --- INITIALIZATION ---
         async function init() {
@@ -1418,6 +1424,7 @@
             // Set up static event listeners
             setupStaticEventListeners();
             setupScrollToTop(); // Setup scroll-to-top functionality
+            setupSocialShare(); // Setup social share functionality
 
             // Initial render based on URL hash or default to index
             const view = window.location.hash.substring(1);
@@ -1431,9 +1438,7 @@
                 renderView(view || 'index');
             }
 
-            // Start digital watch
-            updateDigitalWatch();
-            setInterval(updateDigitalWatch, 1000);
+            // Removed digital watch update calls
         }
 
         // Dark mode toggle functionality
@@ -1568,6 +1573,37 @@
             });
         }
 
+        function setupSocialShare() {
+            socialShareBtn.addEventListener('click', () => {
+                const pageUrl = window.location.href;
+                const pageTitle = document.title;
+
+                // Simple prompt for sharing options
+                const shareOptions = `
+                    Share this page:
+                    1. Facebook
+                    2. Twitter
+                    3. LinkedIn
+                `;
+                const choice = prompt(shareOptions);
+
+                switch (choice) {
+                    case '1':
+                        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`, '_blank', 'width=600,height=400');
+                        break;
+                    case '2':
+                        window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(pageTitle)}`, '_blank', 'width=600,height=400');
+                        break;
+                    case '3':
+                        window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(pageUrl)}&title=${encodeURIComponent(pageTitle)}`, '_blank', 'width=600,height=400');
+                        break;
+                    default:
+                        console.log('Sharing cancelled or invalid choice.');
+                        break;
+                }
+            });
+        }
+
         function renderView(view, pushState = true) {
             if (mobileMenuItems.classList.contains('active')) {
                 mobileMenuItems.classList.remove('active');
@@ -1665,7 +1701,7 @@
         
         function renderIndexPage() {
             contentArea.innerHTML = `
-                <div class="hero-tagline">Premium Digital assets, courses and templates with MRR and PLR rights</div>
+                <div class="hero-tagline">Access Premium Digital assets, courses and templates with MRR and PLR rights</div>
                 <div class="search-container">
                     <div class="sort-container">
                         <div class="sort-filter-group">
@@ -1730,7 +1766,7 @@
                         <ul>
                             <li><strong>Premium Digital Assets:</strong> Explore our extensive library of meticulously crafted digital assets, including graphics, templates, sound effects, video elements, and more. Each asset is designed to save you time and elevate your projects.</li>
                             <li><strong>Comprehensive Courses:</strong> Dive deep into various creative disciplines with our expert-led courses. Whether you're a beginner looking to learn the basics or a seasoned professional aiming to refine your skills, our courses cover everything from graphic design and video editing to 3D modeling and digital art.</li>
-                            <li><strong>Community and Support:</strong> Join a thriving community of fellow creators. We offer dedicated support to ensure you get the most out of our resources and overcome any creative challenges you face.</li>
+                            <li><strong>Community and Support:</b> Join a thriving community of fellow creators. We offer dedicated support to ensure you get the most out of our resources and overcome any creative challenges you face.</li>
                         </ul>
                         
                         <h3>Our Vision</h3>
@@ -2094,17 +2130,7 @@
             }
         }
 
-        function updateDigitalWatch() {
-            const now = new Date();
-            const options = {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false,
-                timeZone: userTimeZone
-            };
-            digitalWatch.textContent = now.toLocaleTimeString('en-US', options);
-        }
+        // Removed updateDigitalWatch function
         
         document.addEventListener('DOMContentLoaded', init);
     </script>
