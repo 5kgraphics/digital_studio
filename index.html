@@ -236,6 +236,9 @@
             color: white;
             padding: 1rem 2rem;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -365,6 +368,9 @@
             max-width: 850px;
             margin: 2.5rem auto 0;
             padding: 0 1.5rem;
+            position: static;
+            top: 75px; /* Adjusted to be below header */
+            z-index: 90;
             background-color: transparent; /* Overlay effect */
             transition: background-color 0.3s, color 0.3s;
         }
@@ -1032,37 +1038,10 @@
             letter-spacing: 0.5px;
         }
 
-        /* WhatsApp Sticky Icon */
-        #whatsapp-sticky-btn {
-            position: fixed;
-            bottom: 25px; /* Aligned with scroll-to-top-btn */
-            right: 25px;
-            background-color: #25D366; /* WhatsApp green */
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 2.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            z-index: 998; /* Lower z-index than scroll-to-top-btn */
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            text-decoration: none; /* Removed the small dash/underline */
-        }
-
-        #whatsapp-sticky-btn:hover {
-            background-color: #1DA851; /* Darker green on hover */
-            transform: scale(1.05);
-        }
-
         /* Scroll to Top Button Styles */
         #scroll-to-top-btn {
             position: fixed;
-            bottom: 90px; /* Adjusted to be above whatsapp-sticky-btn */
+            bottom: 25px;
             right: 25px;
             background: #3498db; /* Primary blue */
             color: white;
@@ -1079,7 +1058,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, background 0.3s ease, transform 0.2s ease;
-            z-index: 999; /* Higher z-index than whatsapp-sticky-btn */
+            z-index: 999;
         }
 
         #scroll-to-top-btn.show {
@@ -1090,6 +1069,33 @@
         #scroll-to-top-btn:hover {
             background: #2980b9;
             transform: translateY(-3px);
+        }
+
+        /* WhatsApp Sticky Icon */
+        #whatsapp-sticky-btn {
+            position: fixed;
+            bottom: 90px; /* Adjust to be above scroll-to-top-btn */
+            right: 25px;
+            background-color: #25D366; /* WhatsApp green */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none; /* Removed the small dash/underline */
+        }
+
+        #whatsapp-sticky-btn:hover {
+            background-color: #1DA851; /* Darker green on hover */
+            transform: scale(1.05);
         }
         
         /* Responsive Adjustments */
@@ -1140,6 +1146,7 @@
             .search-container {
                 margin-top: 2rem;
                 padding: 0 1rem;
+                top: 70px;
             }
             .search-bar input {
                 padding: 0.9rem 1.2rem;
@@ -1185,19 +1192,19 @@
                 bottom: 15px;
                 left: 15px;
             }
-            #whatsapp-sticky-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.8rem;
-                bottom: 18px; /* Adjusted */
-                right: 18px;
-            }
             #scroll-to-top-btn {
                 width: 50px;
                 height: 50px;
                 font-size: 1.4rem;
-                bottom: 65px; /* Adjusted */
+                bottom: 18px;
                 right: 18px;
+            }
+            #whatsapp-sticky-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.8rem;
+                bottom: 65px;
+                right: 12px;
             }
         }
         
@@ -1233,18 +1240,18 @@
                 bottom: 10px;
                 left: 10px;
             }
-            #whatsapp-sticky-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.8rem;
-                bottom: 12px; /* Adjusted */
-                right: 12px;
-            }
             #scroll-to-top-btn {
                 width: 40px;
                 height: 40px;
                 font-size: 1.2rem;
-                bottom: 65px; /* Adjusted */
+                bottom: 12px;
+                right: 12px;
+            }
+            #whatsapp-sticky-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.8rem;
+                bottom: 65px;
                 right: 12px;
             }
 
