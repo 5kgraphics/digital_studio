@@ -236,6 +236,9 @@
             color: white;
             padding: 1rem 2rem;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -365,6 +368,9 @@
             max-width: 850px;
             margin: 2.5rem auto 0;
             padding: 0 1.5rem;
+            position: sticky;
+            top: 75px; /* Adjusted to be below header */
+            z-index: 90;
             background-color: transparent; /* Overlay effect */
             transition: background-color 0.3s, color 0.3s;
         }
@@ -567,7 +573,6 @@
             margin-bottom: 1.2rem;
             flex-grow: 1;
             transition: color 0.3s;
-            text-align: left; /* Changed from justify to left */
         }
         
         .asset-meta {
@@ -923,7 +928,7 @@
             font-size: 1.1rem;
             line-height: 1.8;
             color: #5d6d7e;
-            text-align: left; /* Changed from justify to left */
+            text-align: justify; /* Explicitly set to justify */
             margin-bottom: 2rem;
             width: 100%; /* Ensure paragraph takes full available width */
         }
@@ -946,61 +951,6 @@
             transform: translateY(-2px);
         }
 
-        /* Blog Post Detail Page Styles */
-        .blog-detail-page {
-            max-width: 900px;
-            margin: 3rem auto;
-            padding: 2.5rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .blog-detail-page h1 {
-            font-size: 2.8rem;
-            color: #2980b9;
-            margin-bottom: 1rem;
-            font-weight: 800;
-            text-align: center;
-        }
-
-        .blog-detail-meta {
-            font-size: 1rem;
-            color: #7f8c8d;
-            margin-bottom: 2rem;
-            text-align: center;
-            font-style: italic;
-        }
-
-        .blog-detail-content {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #5d6d7e;
-        }
-
-        .blog-detail-content img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 2rem auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .back-to-blog {
-            display: inline-block;
-            margin-top: 2rem;
-            color: #3498db;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s ease;
-        }
-
-        .back-to-blog:hover {
-            color: #2980b9;
-            text-decoration: underline;
-        }
-
         /* Animation for button click */
         @keyframes buttonPress {
             0% { transform: scale(1); }
@@ -1013,37 +963,29 @@
             animation: buttonPress 0.2s ease-out;
         }
 
-        /* WhatsApp Sticky Icon */
-        #whatsapp-sticky-btn {
+        /* Digital Watch Styles */
+        #digital-watch {
             position: fixed;
-            bottom: 25px; /* Aligned with scroll-to-top-btn */
-            right: 25px;
-            background-color: #25D366; /* WhatsApp green */
+            bottom: 25px;
+            left: 25px;
+            background: rgba(44, 62, 80, 0.8); /* Dark blue with transparency */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 2.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            z-index: 998; /* Lower z-index than scroll-to-top-btn */
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            text-decoration: none; /* Removed the small dash/underline */
-        }
-
-        #whatsapp-sticky-btn:hover {
-            background-color: #1DA851; /* Darker green on hover */
-            transform: scale(1.05);
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 1.6rem;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            z-index: 1000;
+            letter-spacing: 0.5px;
         }
 
         /* Scroll to Top Button Styles */
         #scroll-to-top-btn {
             position: fixed;
-            bottom: 90px; /* Adjusted to be above whatsapp-sticky-btn */
+            bottom: 25px;
             right: 25px;
             background: #3498db; /* Primary blue */
             color: white;
@@ -1060,7 +1002,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, background 0.3s ease, transform 0.2s ease;
-            z-index: 999; /* Higher z-index than whatsapp-sticky-btn */
+            z-index: 999;
         }
 
         #scroll-to-top-btn.show {
@@ -1073,29 +1015,30 @@
             transform: translateY(-3px);
         }
 
-        /* Social Share Button Styles */
-        #social-share-btn {
+        /* WhatsApp Sticky Icon */
+        #whatsapp-sticky-btn {
             position: fixed;
-            bottom: 25px;
-            left: 25px;
-            background: #e74c3c; /* Red color, can be customized */
+            bottom: 90px; /* Adjust to be above scroll-to-top-btn */
+            right: 25px;
+            background-color: #25D366; /* WhatsApp green */
             color: white;
             border: none;
             border-radius: 50%;
-            width: 55px;
-            height: 55px;
-            font-size: 1.6rem;
+            width: 60px;
+            height: 60px;
+            font-size: 2.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
-            z-index: 1000;
-            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none; /* Removed the small dash/underline */
         }
 
-        #social-share-btn:hover {
-            background: #c0392b; /* Darker red on hover */
+        #whatsapp-sticky-btn:hover {
+            background-color: #1DA851; /* Darker green on hover */
             transform: scale(1.05);
         }
         
@@ -1115,16 +1058,10 @@
                 margin: 2rem auto;
                 padding: 2rem;
             }
-            .blog-detail-page { /* Responsive for blog detail page */
-                margin: 2rem auto;
-                padding: 2rem;
-            }
-            .asset-detail-page h1,
-            .blog-detail-page h1 {
+            .asset-detail-page h1 {
                 font-size: 2.2rem;
             }
-            .asset-detail-page p,
-            .blog-detail-content {
+            .asset-detail-page p {
                 font-size: 1rem;
             }
             .asset-detail-page .download-now-btn {
@@ -1147,6 +1084,7 @@
             .search-container {
                 margin-top: 2rem;
                 padding: 0 1rem;
+                top: 70px;
             }
             .search-bar input {
                 padding: 0.9rem 1.2rem;
@@ -1180,32 +1118,28 @@
             .page-content {
                 padding: 2rem;
             }
-            .blog-detail-page {
-                padding: 2rem;
-            }
             .modal-content {
                 max-width: 95%;
             }
-            #whatsapp-sticky-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.8rem;
-                bottom: 25px; /* Adjusted from 18px */
-                right: 18px;
+            #digital-watch {
+                font-size: 1.4rem;
+                padding: 10px 15px;
+                bottom: 15px;
+                left: 15px;
             }
             #scroll-to-top-btn {
                 width: 50px;
                 height: 50px;
                 font-size: 1.4rem;
-                bottom: 80px; /* Adjusted from 65px */
+                bottom: 18px;
                 right: 18px;
             }
-            #social-share-btn {
-                font-size: 1.4rem;
-                width: 50px;
-                height: 50px;
-                bottom: 25px; /* Adjusted from 18px */
-                left: 18px;
+            #whatsapp-sticky-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.8rem;
+                bottom: 65px;
+                right: 12px;
             }
         }
         
@@ -1227,34 +1161,31 @@
             .asset-description { font-size: 0.9rem; }
             .download-btn { padding: 0.5rem 1rem; font-size: 0.85rem;}
             .page-content { padding: 1.5rem; }
-            .blog-detail-page { padding: 1.5rem; }
-            .blog-detail-page h1 { font-size: 1.8rem; }
             .modal-header { padding: 1rem 1.2rem; }
             .modal-title { font-size: 1.4rem; }
             .modal-close { font-size: 1.6rem; }
             .modal-body { padding: 1.2rem; }
             .modal-image { height: 160px; margin-bottom: 1rem;}
             .modal-footer { padding: 1rem 1.2rem; }
-            #whatsapp-sticky-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.8rem;
-                bottom: 20px; /* Adjusted from 12px */
-                right: 12px;
+            #digital-watch {
+                font-size: 1.1rem;
+                padding: 8px 10px;
+                bottom: 10px;
+                left: 10px;
             }
             #scroll-to-top-btn {
                 width: 40px;
                 height: 40px;
                 font-size: 1.2rem;
-                bottom: 70px; /* Adjusted from 65px */
+                bottom: 12px;
                 right: 12px;
             }
-            #social-share-btn {
-                font-size: 1.2rem;
-                width: 40px;
-                height: 40px;
-                bottom: 20px; /* Adjusted from 12px */
-                left: 12px;
+            #whatsapp-sticky-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.8rem;
+                bottom: 65px;
+                right: 12px;
             }
 
             /* Specific adjustments for sort/filter on small screens */
@@ -1303,7 +1234,7 @@
 
     <header>
         <div class="header-left">
-            <div class="logo">247 Digital</div>
+            <div class="logo">5K Graphic Studio</div>
             </div>
         
         <div class="header-right">
@@ -1337,19 +1268,17 @@
     
     <footer>
         <div class="footer-content">
-            <p>247 Digital provides high-quality digital assets and courses for creators.</p>
+            <p>5K Graphic Studio provides high-quality digital assets, Templates and courses.</p>
             <div class="social-icons">
                 <a href="https://www.instagram.com/5k_graphic_studio?igsh=ZHoya3czMjIyNG1w" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.tiktok.com/@nooralkali?_t=ZM-8yKNy31M3ya&_r=1" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
                 <a href="https://t.me/nooralkalii" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
             </div>
-            <p class="copyright">&copy; 2025 247 Digital. All rights reserved.</p>
+            <p class="copyright">&copy; 2025 5K Graphic Studio. All rights reserved.</p>
         </div>
     </footer>
 
-    <button id="social-share-btn" title="Share on Social Media">
-        <i class="fas fa-share-alt"></i>
-    </button>
+    <div id="digital-watch"></div>
     <a href="https://wa.me/2348179977737" target="_blank" id="whatsapp-sticky-btn" title="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -1367,16 +1296,16 @@
             apiKey: "AIzaSyBJa8xvmu19M-tokkjT8Y4R9diGM4FG-Go",
             authDomain: "k-digital-studio-64d0f.firebaseapp.com",
             projectId: "k-digital-studio-64d0f",
-            storageBucket: "k-digital-studio-64d0f.appspot.com",
+            storageBucket: "k-digital-studio-64d0f.appId.com",
             messagingSenderId: "986818037155",
             appId: "1:986818037155:web:c41803fe1f9214477c0616",
             measurementId: "G-ZJ43QR9W71"
         };
 
         // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore(app);
-        const auth = firebase.auth(app);
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
         
         // --- GLOBAL STATE ---
         let allAssets = [];
@@ -1395,13 +1324,13 @@
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenuItems = document.getElementById('mobile-menu-items');
         const darkModeToggle = document.getElementById('darkModeToggle');
+        const digitalWatch = document.getElementById('digital-watch');
         // New DOM Elements for Blog Post Modal
         const blogPostModal = document.getElementById('blogPostModal');
         const modalBlogPostClose = document.getElementById('modalBlogPostClose');
         const modalBlogPostTitle = document.getElementById('modalBlogPostTitle');
         const modalBlogPostContent = document.getElementById('modalBlogPostContent');
         const scrollToTopBtn = document.getElementById('scroll-to-top-btn'); // Get the new button
-        const socialShareBtn = document.getElementById('social-share-btn'); // Get the new social share button
 
         // --- INITIALIZATION ---
         async function init() {
@@ -1411,28 +1340,30 @@
                 darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             }
 
+            // Fetch all data from Firebase and user timezone concurrently
+            await Promise.all([
+                fetchAssets(),
+                fetchFaqs(),
+                fetchBlogPosts(),
+                fetchUserTimeZone()
+            ]);
+            
             // Set up static event listeners
             setupStaticEventListeners();
             setupScrollToTop(); // Setup scroll-to-top functionality
-            setupSocialShare(); // Setup social share functionality
 
-            // Fetch all data from Firebase and user timezone
-            await fetchAssets();
-            await fetchFaqs();
-            await fetchBlogPosts();
-            await fetchUserTimeZone();
-            
             // Initial render based on URL hash or default to index
             const view = window.location.hash.substring(1);
-            if (view.startsWith('asset-detail/')) {
-                const assetId = view.substring('asset-detail/'.length);
+            if (view.startsWith('asset-')) {
+                const assetId = view.substring(6); // 'asset-'.length is 6
                 renderView(`asset-detail/${assetId}`);
-            } else if (view.startsWith('blog-post/')) {
-                const postId = view.substring('blog-post/'.length);
-                renderView(`blog-post/${postId}`);
             } else {
                 renderView(view || 'index');
             }
+
+            // Start digital watch
+            updateDigitalWatch();
+            setInterval(updateDigitalWatch, 1000);
         }
 
         // Dark mode toggle functionality
@@ -1452,6 +1383,10 @@
             blogPostModal.classList.remove('active');
         });
 
+        modalBlogPostClose.addEventListener('click', () => {
+            blogPostModal.classList.remove('active');
+        });
+
         blogPostModal.addEventListener('click', (e) => {
             if (e.target === blogPostModal) {
                 blogPostModal.classList.remove('active');
@@ -1464,32 +1399,9 @@
             blogPostModal.classList.add('active');
         }
 
+
         async function fetchAssets() {
             try {
-                // For testing, create some sample data if Firebase fails
-                if (!db) {
-                    allAssets = [
-                        {
-                            id: '1',
-                            title: 'Sample Asset 1',
-                            description: 'This is a sample digital asset description.',
-                            downloads: 100,
-                            type: 'template',
-                            image: 'https://placehold.co/600x400/cccccc/333333?text=Sample+Asset+1'
-                        },
-                        {
-                            id: '2',
-                            title: 'Sample Asset 2',
-                            description: 'Another sample digital asset with a longer description to test text truncation functionality in the card view.',
-                            downloads: 50,
-                            type: 'graphic',
-                            image: 'https://placehold.co/600x400/cccccc/333333?text=Sample+Asset+2'
-                        }
-                    ];
-                    filteredAssets = [...allAssets];
-                    return;
-                }
-
                 const snapshot = await db.collection('products').get();
                 allAssets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 // Initial sort: alphabetical by title
@@ -1497,106 +1409,36 @@
                 filteredAssets = [...allAssets];
             } catch (error) {
                 console.error("Error fetching assets:", error);
-                // Create some sample data if Firebase fails
-                allAssets = [
-                    {
-                        id: '1',
-                        title: 'Sample Asset 1',
-                        description: 'This is a sample digital asset description.',
-                        downloads: 100,
-                        type: 'template',
-                        image: 'https://placehold.co/600x400/cccccc/333333?text=Sample+Asset+1'
-                    },
-                    {
-                        id: '2',
-                        title: 'Sample Asset 2',
-                        description: 'Another sample digital asset with a longer description to test text truncation functionality in the card view.',
-                        downloads: 50,
-                        type: 'graphic',
-                        image: 'https://placehold.co/600x400/cccccc/333333?text=Sample+Asset+2'
-                    }
-                ];
-                filteredAssets = [...allAssets];
-                console.log("Error loading products. Showing sample data instead.");
+                console.log("Error loading products. Please try again later.");
             }
         }
 
         async function fetchFaqs() {
             try {
-                if (!db) {
-                    faqItems = [
-                        {
-                            id: '1',
-                            question: 'What is 247 Digital?',
-                            answer: '247 Digital is a platform providing high-quality digital assets and courses.'
-                        },
-                        {
-                            id: '2',
-                            question: 'How do I download assets?',
-                            answer: 'Click on the asset you want and then click the download button.'
-                        }
-                    ];
-                    return;
-                }
-
                 const snapshot = await db.collection('faqs').get();
                 faqItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             } catch (error) {
                 console.error("Error fetching FAQs:", error);
-                faqItems = [
-                    {
-                        id: '1',
-                        question: 'What is 247 Digital?',
-                        answer: '247 Digital is a platform providing high-quality digital assets and courses.'
-                    },
-                    {
-                        id: '2',
-                        question: 'How do I download assets?',
-                        answer: 'Click on the asset you want and then click the download button.'
-                    }
-                ];
-                console.log("Error loading FAQs. Showing sample data instead.");
+                console.log("Error loading FAQs. Please try again later.");
             }
         }
 
         async function fetchBlogPosts() {
             try {
-                if (!db) {
-                    blogPosts = [
-                        {
-                            id: '1',
-                            title: 'Sample Blog Post',
-                            excerpt: 'This is a sample blog post excerpt.',
-                            content: '<p>This is the full content of a sample blog post.</p>',
-                            date: new Date().toISOString()
-                        }
-                    ];
-                    return;
-                }
-
                 const snapshot = await db.collection('blogs').orderBy('date', 'desc').get();
                 blogPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             } catch (error) {
                 console.error("Error fetching blog posts:", error);
-                blogPosts = [
-                    {
-                        id: '1',
-                        title: 'Sample Blog Post',
-                        excerpt: 'This is a sample blog post excerpt.',
-                        content: '<p>This is the full content of a sample blog post.</p>',
-                        date: new Date().toISOString()
-                    }
-                ];
-                console.log("Error loading blog posts. Showing sample data instead.");
+                console.log("Error loading blog posts. Please try again later.");
             }
         }
 
         // Function to fetch user's timezone based on IP
         async function fetchUserTimeZone() {
             try {
-                const response = await fetch('https://ipapi.co/json/');
+                const response = await fetch('http://ip-api.com/json');
                 const data = await response.json();
-                if (data.timezone) {
+                if (data.status === 'success' && data.timezone) {
                     userTimeZone = data.timezone;
                     console.log("User timezone detected:", userTimeZone);
                 } else {
@@ -1623,15 +1465,13 @@
             ['desktop-blog-link', 'mobile-blog-link'].forEach(id => document.getElementById(id).addEventListener('click', () => renderView('blog')));
             ['desktop-download-guide-link', 'mobile-download-guide-link'].forEach(id => document.getElementById(id).addEventListener('click', () => renderView('how-to-download')));
 
+
             // Handle browser back/forward buttons
             window.addEventListener('popstate', () => {
                 const view = window.location.hash.substring(1);
                 if (view.startsWith('asset-detail/')) {
                     const assetId = view.substring('asset-detail/'.length);
                     renderView(`asset-detail/${assetId}`, false);
-                } else if (view.startsWith('blog-post/')) {
-                    const postId = view.substring('blog-post/'.length);
-                    renderView(`blog-post/${postId}`, false);
                 } else {
                     renderView(view || 'index', false); // Don't push history state again
                 }
@@ -1655,32 +1495,6 @@
             });
         }
 
-        function setupSocialShare() {
-            socialShareBtn.addEventListener('click', () => {
-                const pageUrl = window.location.href;
-                const pageTitle = document.title;
-
-                // Simple prompt for sharing options
-                const shareOptions = `Share this page:\n1. Facebook\n2. Twitter\n3. LinkedIn`;
-                const choice = prompt(shareOptions);
-
-                switch (choice) {
-                    case '1':
-                        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`, '_blank', 'width=600,height=400');
-                        break;
-                    case '2':
-                        window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent(pageTitle)}`, '_blank', 'width=600,height=400');
-                        break;
-                    case '3':
-                        window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(pageUrl)}&title=${encodeURIComponent(pageTitle)}`, '_blank', 'width=600,height=400');
-                        break;
-                    default:
-                        console.log('Sharing cancelled or invalid choice.');
-                        break;
-                }
-            });
-        }
-
         function renderView(view, pushState = true) {
             if (mobileMenuItems.classList.contains('active')) {
                 mobileMenuItems.classList.remove('active');
@@ -1701,23 +1515,6 @@
                     console.error("Asset not found for ID:", assetId);
                 }
                 return; // Exit function after handling asset detail
-            }
-
-            // Handle blog post page specifically
-            if (view.startsWith('blog-post/')) {
-                const postId = view.substring('blog-post/'.length);
-                const post = blogPosts.find(p => p.id === postId);
-                if (post) {
-                    if (pushState) {
-                        window.history.pushState({view: `blog-post/${postId}`}, '', `#blog-post/${postId}`);
-                    }
-                    renderBlogPostPage(post);
-                } else {
-                    // If post not found, redirect to blog or show error
-                    renderBlogPage();
-                    console.error("Blog post not found for ID:", postId);
-                }
-                return; // Exit function after handling blog post
             }
 
             if (pushState) {
@@ -1778,7 +1575,7 @@
         
         function renderIndexPage() {
             contentArea.innerHTML = `
-                <div class="hero-tagline">Access Premium Digital assets, courses and templates with MRR and PLR rights</div>
+                <div class="hero-tagline">Premium Digital assets, courses and templates with MRR and PLR rights</div>
                 <div class="search-container">
                     <div class="sort-container">
                         <div class="sort-filter-group">
@@ -1832,9 +1629,9 @@
         function renderAboutPage() {
             contentArea.innerHTML = `
                 <div class="page-content-container">
-                    <h1 class="page-title">About 247 Digital</h1>
+                    <h1 class="page-title">About 5K Graphic Studio</h1>
                     <div class="page-content">
-                        <p>Welcome to <strong>247 Digital</strong>, your premier destination for high-quality digital assets and comprehensive creative courses. We are passionate about empowering creators, designers, and enthusiasts with the tools and knowledge they need to bring their visions to life.</p>
+                        <p>Welcome to <strong>5K Graphic Studio</strong>, your premier destination for high-quality digital assets and comprehensive creative courses. We are passionate about empowering creators, designers, and enthusiasts with the tools and knowledge they need to bring their visions to life.</p>
                         
                         <h3>Our Mission</h3>
                         <p>Our mission is to democratize creativity by providing accessible, top-tier digital resources. We believe that everyone, regardless of their skill level, should have access to the best assets and education to excel in their creative endeavors. We strive to be a catalyst for innovation and artistic expression.</p>
@@ -1843,13 +1640,13 @@
                         <ul>
                             <li><strong>Premium Digital Assets:</strong> Explore our extensive library of meticulously crafted digital assets, including graphics, templates, sound effects, video elements, and more. Each asset is designed to save you time and elevate your projects.</li>
                             <li><strong>Comprehensive Courses:</strong> Dive deep into various creative disciplines with our expert-led courses. Whether you're a beginner looking to learn the basics or a seasoned professional aiming to refine your skills, our courses cover everything from graphic design and video editing to 3D modeling and digital art.</li>
-                            <li><strong>Community and Support:</b> Join a thriving community of fellow creators. We offer dedicated support to ensure you get the most out of our resources and overcome any creative challenges you face.</li>
+                            <li><strong>Community and Support:</strong> Join a thriving community of fellow creators. We offer dedicated support to ensure you get the most out of our resources and overcome any creative challenges you face.</li>
                         </ul>
                         
                         <h3>Our Vision</h3>
-                        <p>We envision a world where creativity knows no bounds, and every idea can be transformed into a masterpiece. 247 Digital is committed to continuously expanding our offerings, embracing new technologies, and fostering a supportive environment for global creative talent.</p>
+                        <p>We envision a world where creativity knows no bounds, and every idea can be transformed into a masterpiece. 5K Graphic Studio is committed to continuously expanding our offerings, embracing new technologies, and fostering a supportive environment for global creative talent.</p>
 
-                        <p>Thank you for choosing 247 Digital. We're excited to be part of your creative journey!</p>
+                        <p>Thank you for choosing 5K Graphic Studio. We're excited to be part of your creative journey!</p>
                     </div>
                 </div>
             `;
@@ -1880,20 +1677,20 @@
                 const message = document.getElementById('message').value;
 
                 try {
-                    if (db) {
-                        await db.collection('contactMessages').add({
-                            name,
-                            email,
-                            subject,
-                            message,
-                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                    }
+                    await db.collection('contactMessages').add({
+                        name,
+                        email,
+                        subject,
+                        message,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
                     console.log('Message sent successfully!');
+                    // Replaced alert with a simple console log for Canvas environment
                     console.log('Thank you for your message! We will get back to you soon.'); 
                     e.target.reset();
                 } catch (error) {
                     console.error("Error sending message:", error);
+                    // Replaced alert with a simple console log for Canvas environment
                     console.log("Error sending message. Please try again later."); 
                 }
             });
@@ -1939,33 +1736,11 @@
                 element.addEventListener('click', function(e) {
                     e.preventDefault(); // Prevent default link behavior
                     const postId = this.getAttribute('data-id');
-                    renderView(`blog-post/${postId}`);
+                    const post = blogPosts.find(p => p.id === postId);
+                    if (post) {
+                        showBlogPostModal(post);
+                    }
                 });
-            });
-        }
-
-        function renderBlogPostPage(post) {
-            contentArea.innerHTML = `
-                <div class="blog-detail-page">
-                    <h1>${post.title}</h1>
-                    <div class="blog-detail-meta">
-                        Posted on ${new Date(post.date).toLocaleDateString('en-US', { 
-                            year: 'numeric', 
-                            month: 'long', 
-                            day: 'numeric' 
-                        })}
-                    </div>
-                    <div class="blog-detail-content">
-                        ${post.content || post.excerpt}
-                    </div>
-                    <a href="#blog" class="back-to-blog"><i class="fas fa-arrow-left"></i> Back to Blog</a>
-                </div>
-            `;
-
-            // Add event listener to back button
-            document.querySelector('.back-to-blog').addEventListener('click', (e) => {
-                e.preventDefault();
-                renderView('blog');
             });
         }
 
@@ -1974,7 +1749,7 @@
                 <div class="page-content-container">
                     <h1 class="page-title">How to Download Assets</h1>
                     <div class="page-content">
-                        <p>Downloading digital assets from 247 Digital is a simple and straightforward process. Follow these steps to get your desired files:</p>
+                        <p>Downloading digital assets from 5K Graphic Studio is a simple and straightforward process. Follow these steps to get your desired files:</p>
                         
                         <h3>Step 1: Browse or Search for Assets</h3>
                         <p>On the homepage, you can browse through various categories of digital assets or use the search bar to find a specific asset or course.</p>
@@ -2190,23 +1965,35 @@
             const asset = allAssets.find(a => a.id === assetId);
             if (asset) {
                 if (asset.downloadLink) {
-                    // Update download count in Firestore if available
-                    if (db) {
-                        db.collection('products').doc(assetId).update({
-                            downloads: firebase.firestore.FieldValue.increment(1),
-                            lastDownloaded: firebase.firestore.FieldValue.serverTimestamp()
-                        }).catch(error => {
-                            console.error("Error updating download count:", error);
-                        });
-                    }
-                    // Open download link after updating count
-                    window.open(asset.downloadLink, '_blank');
+                    // Update download count in Firestore
+                    db.collection('products').doc(assetId).update({
+                        downloads: firebase.firestore.FieldValue.increment(1),
+                        lastDownloaded: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then(() => {
+                        // Open download link after updating count
+                        window.open(asset.downloadLink, '_blank');
+                    }).catch(error => {
+                        console.error("Error updating download count:", error);
+                        window.open(asset.downloadLink, '_blank');
+                    });
                 } else {
                     console.log(`Downloading: ${asset.title}\n\n(This is a demo. No file will be downloaded as no download link was provided.)`);
                 }
             }
         }
 
+        function updateDigitalWatch() {
+            const now = new Date();
+            const options = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false,
+                timeZone: userTimeZone
+            };
+            digitalWatch.textContent = now.toLocaleTimeString('en-US', options);
+        }
+        
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
