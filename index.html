@@ -964,25 +964,6 @@
             animation: buttonPress 0.2s ease-out;
         }
 
-        /* Digital Watch Styles */
-        #digital-watch {
-            position: fixed;
-            bottom: 25px;
-            left: 25px;
-            background: rgba(44, 62, 80, 0.8); /* Dark blue with transparency */
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: white;
-            padding: 12px 18px;
-            border-radius: 12px;
-            font-size: 1.6rem;
-            font-weight: bold;
-            text-align: center;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-            z-index: 1000;
-            letter-spacing: 0.5px;
-        }
-
         /* Scroll to Top Button Styles */
         #scroll-to-top-btn {
             position: fixed;
@@ -1122,12 +1103,6 @@
             .modal-content {
                 max-width: 95%;
             }
-            #digital-watch {
-                font-size: 1.4rem;
-                padding: 10px 15px;
-                bottom: 15px;
-                left: 15px;
-            }
             #scroll-to-top-btn {
                 width: 50px;
                 height: 50px;
@@ -1168,12 +1143,6 @@
             .modal-body { padding: 1.2rem; }
             .modal-image { height: 160px; margin-bottom: 1rem;}
             .modal-footer { padding: 1rem 1.2rem; }
-            #digital-watch {
-                font-size: 1.1rem;
-                padding: 8px 10px;
-                bottom: 10px;
-                left: 10px;
-            }
             #scroll-to-top-btn {
                 width: 40px;
                 height: 40px;
@@ -1279,7 +1248,6 @@
         </div>
     </footer>
 
-    <div id="digital-watch"></div>
     <a href="https://wa.me/2348179977737" target="_blank" id="whatsapp-sticky-btn" title="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -1325,7 +1293,6 @@
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenuItems = document.getElementById('mobile-menu-items');
         const darkModeToggle = document.getElementById('darkModeToggle');
-        const digitalWatch = document.getElementById('digital-watch');
         // New DOM Elements for Blog Post Modal
         const blogPostModal = document.getElementById('blogPostModal');
         const modalBlogPostClose = document.getElementById('modalBlogPostClose');
@@ -1361,10 +1328,6 @@
             } else {
                 renderView(view || 'index');
             }
-
-            // Start digital watch
-            updateDigitalWatch();
-            setInterval(updateDigitalWatch, 1000);
         }
 
         // Dark mode toggle functionality
@@ -1982,26 +1945,8 @@
                 }
             }
         }
-
-        function updateDigitalWatch() {
-            const now = new Date();
-            const options = {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false,
-                timeZone: userTimeZone
-            };
-            digitalWatch.textContent = now.toLocaleTimeString('en-US', options);
-        }
         
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
-
-
-
-
-
-
